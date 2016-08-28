@@ -1,0 +1,34 @@
+* text eol=lf whitespace=trailing-space,space-before-tab,-indent-with-non-tab,tab-in-indent,tabwidth=2
+
+*.md text
+*.txt text
+*.sh text
+*.bat text eol=auto
+*.xml text
+*.htm text
+*.html text
+*.css text
+*.js text
+*.py text
+*.asm text
+*.c text
+*.h text
+
+*.bmp binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.pcx binary
+*.ico binary
+
+*.wav binary
+*.ogg binary
+*.mp3 binary
+
+*.exe binary
+*.bin binary
+*.prg binary
+*.d64 binary
+*.nes binary
+*.smc binary
+*.rip binary
