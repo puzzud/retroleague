@@ -1,8 +1,8 @@
-; ----
-
 .p816   ; 65816 processor
 .i16    ; X/Y are 16 bits
 .a8     ; A is 8 bits
+
+.import _main
 
 .segment "HEADER"      ; +$7FE0 in file
   .byte "ROM NAME"     ; ROM name. NOTE: Can be changed.
@@ -18,5 +18,3 @@
 .segment "VECTORS"
   .word 0, 0, 0, 0, 0, 0, 0, 0
   .word 0, 0, 0, 0, 0, 0, _main, 0
-
-; ----
