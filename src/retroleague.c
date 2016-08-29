@@ -1,15 +1,13 @@
-extern void init( void );
+#include "system.h"
 
-int main (void)
+int main(void)
 {
   init();
   
-  // Set background color to $03e0.
-  *((unsigned char*)0x2122) = 0xe0;
-  *((unsigned char*)0x2122) = 0x03;
+  SET_MEMORY(0x2122, 0xe0)
+  SET_MEMORY(0x2122, 0x03)
   
-  // Maximum screen brightness.
-  *((unsigned char*)0x2100) = 0x0f;
+  SET_MEMORY(0x2100, 0x0f)
   
   while(1)
   {
