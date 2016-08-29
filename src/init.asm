@@ -8,12 +8,20 @@
 .export __STARTUP__
 
 .segment "CODE"
-_init:
-  clc             ; native mode
-  xce
-  rep #$10        ; X/Y 16-bit
-  sep #$20        ; A 8-bit
 
+__STARTUP__:
+_init:
+  sei              ; disable interrupts
+  
+  clc              ; native mode
+  xce
+
+  rep #$18         ; X/Y 16-bi, decimal mode off
+  sep #$20         ; A 8-bit
+  
+  ;ldx #$1fff       ; Set up the stack
+  ;txs
+  
   ; Clear PPU registers
   ldx #$33
 @loop:
@@ -21,8 +29,5 @@ _init:
   stz $4200,x
   dex
   bpl @loop
-  
-  rts
 
-__STARTUP__:
   jmp _main
