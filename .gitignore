@@ -1,3 +1,4 @@
 /bin/*.smc
 /build/*.o
 /build/*.asm
+/lib/*.o

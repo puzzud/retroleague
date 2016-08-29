@@ -11,4 +11,12 @@ cc65 --cpu 65816 -I include -O3 src/$project_name.c -o build/$project_name.asm
 ca65 --cpu 65816 -I include build/$project_name.asm -o build/$project_name.o
 
 # Create executable (link all objects).
-ld65 -C doc/lorom128.cfg -o bin/$project_name.smc build/$project_name.o build/init.o build/rom.o
+if [ ! -e "lib/snes.lib" ];
+then
+  echo "Error: lib/snes.lib is not present."
+  exit 1
+fi
+
+ld65 -C doc/lorom128.cfg -L lib -o bin/$project_name.smc build/$project_name.o build/init.o build/rom.o --lib snes.lib
+
+exit 0

@@ -25,6 +25,8 @@
 *.ogg binary
 *.mp3 binary
 
+*.o binary
+*.lib binary
 *.exe binary
 *.bin binary
 *.prg binary
