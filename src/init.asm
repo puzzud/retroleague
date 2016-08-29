@@ -2,7 +2,10 @@
 .i16    ; X/Y are 16 bits
 .a8     ; A is 8 bits
 
+.import _main
+
 .export _init
+.export __STARTUP__
 
 .segment "CODE"
 _init:
@@ -20,3 +23,6 @@ _init:
   bpl @loop
   
   rts
+
+__STARTUP__:
+  jmp _main
