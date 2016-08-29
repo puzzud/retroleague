@@ -2,3 +2,4 @@
 /build/*.o
 /build/*.asm
 /lib/*.o
+/src/*.o
