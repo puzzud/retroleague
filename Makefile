@@ -6,15 +6,13 @@ LDIR = lib
 TDIR = build
 BDIR = bin
 
-C_SRC = src/retroleague.c
+C_SRC := $(wildcard $(SDIR)/*.c)
+A_SRC := $(wildcard $(SDIR)/*.asm)
 
-A_SRC = src/init.asm \
-        src/rom.asm
+C_ASM := $(patsubst %.c,%.asm,$(C_SRC))
+C_OBJ := $(addprefix $(TDIR)/,$(notdir $(patsubst %.c,%.o,$(C_SRC))))
+A_OBJ := $(addprefix $(TDIR)/,$(notdir $(patsubst %.asm,%.o,$(A_SRC))))
 
-C_ASM := $(C_SRC:.c=.asm)
-C_OBJ := $(C_ASM:.asm=.o)
-A_OBJ := $(A_SRC:.asm=.o)
-            
 CC65_TARGET ?= snes
 PROGRAM = $(PROJECT_NAME).smc
 TARGET_LIB = snes.lib
@@ -40,11 +38,11 @@ all: $(BDIR)/$(PROGRAM)
 %.asm: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
-%.o: %.asm
+$(TDIR)/%.o: $(SDIR)/%.asm
 	$(AS) $(AFLAGS) $< -o $@
 
 $(BDIR)/$(PROGRAM): $(C_OBJ) $(A_OBJ)
 	$(LD) $(LDFLAGS) -o $@ $^ $(LDFLAGS2)
 
 clean:
-	@rm -f $(SDIR)/*.o $(SDIR)/$(PROJECT_NAME).asm $(TDIR)/*.o $(TDIR)/$(PROJECT_NAME).asm $(BDIR)/$(PROGRAM)
+	@rm -f $(TDIR)/*.o $(BDIR)/$(PROGRAM)

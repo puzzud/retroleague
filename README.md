@@ -17,7 +17,6 @@ An SNES game programmed in C and 65816 Assembly.
  - Open retroleague/bin/retroleague.smc in an emulator.
 
 **To Do:**
- - Improve Makefile to use build directory.
  - Add a step to patch and build snes.lib (replacing need to supply binary and have build_snes_runtime_lib.sh).
  - Determine how to get function parameters to work correctly--cc65 runtime library code not using 65816 architecture correctly?
  - Make build process give SMC image a valid CRC checksum header value at build time.
