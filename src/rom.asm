@@ -2,7 +2,7 @@
 .i16    ; X/Y are 16 bits
 .a8     ; A is 8 bits
 
-.import _init
+.import _Reset
 
 .segment "HEADER"      ; +$7FE0 in file
   .byte "ROM NAME"     ; ROM name. NOTE: Can be changed.
@@ -17,4 +17,4 @@
 
 .segment "VECTORS"
   .word 0, 0, 0, 0, 0, 0, 0, 0
-  .word 0, 0, 0, 0, 0, 0, _init, 0
+  .word 0, 0, 0, 0, 0, 0, _Reset, 0

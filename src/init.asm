@@ -2,15 +2,14 @@
 .i16    ; X/Y are 16 bits
 .a8     ; A is 8 bits
 
-.import _main
+.import _Init
+.import _Update
 
-.export _init
-.export __STARTUP__
+.export _Reset
 
 .segment "CODE"
 
-__STARTUP__:
-_init:
+_Reset:
   sei              ; disable interrupts
   
   clc              ; native mode
@@ -24,10 +23,14 @@ _init:
   
   ; Clear PPU registers
   ldx #$33
-@loop:
+@clearPpuLoop:
   stz $2100,x
   stz $4200,x
   dex
-  bpl @loop
-
-  jmp _main
+  bpl @clearPpuLoop
+  
+  jsr _Init
+  
+@mainLoop:
+  jsr _Update
+  bra @mainLoop

@@ -3,16 +3,14 @@
 void __fastcall__ InitVideo(void);
 void __fastcall__ SetBackgroundColor(void);
 
-int main(void)
+void Init(void)
 {
   InitVideo();
+}
+
+void Update(void)
+{
   
-  while(1)
-  {
-    ;
-  }
-  
-  return 0;
 }
 
 void InitVideo(void)
