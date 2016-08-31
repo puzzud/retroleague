@@ -20,6 +20,8 @@ ifeq ($(CC65_TARGET),snes)
 CPU      := 65816
 LDCONFIG := lorom128.cfg
 BIN_EXT  := smc
+SNES_EMU ?= znes
+EMU      := $(SNES_EMU)
 endif
 
 AS       := ca65
@@ -45,6 +47,9 @@ $(TDIR)/%.o: $(SDIR)/%.asm
 
 $(BDIR)/$(PROGRAM): $(C_OBJ) $(A_OBJ)
 	$(LD) $(LDFLAGS) -o $@ $^ $(LDFLAGS2)
+
+play: $(BDIR)/$(PROGRAM)
+	$(EMU) $<
 
 clean:
 	@rm -f $(TDIR)/*.o $(BDIR)/$(PROGRAM)
