@@ -3,6 +3,7 @@ PROJECT_NAME = retroleague
 SDIR = src
 IDIR = include
 LDIR = lib
+CDIR = doc
 TDIR = build
 BDIR = bin
 
@@ -14,20 +15,21 @@ C_OBJ := $(addprefix $(TDIR)/,$(notdir $(patsubst %.c,%.o,$(C_SRC))))
 A_OBJ := $(addprefix $(TDIR)/,$(notdir $(patsubst %.asm,%.o,$(A_SRC))))
 
 CC65_TARGET ?= snes
-PROGRAM = $(PROJECT_NAME).smc
-TARGET_LIB = snes.lib
 
-ifdef CC65_TARGET
-AS       = ca65
-CC       = cc65
-LD       = ld65
-AFLAGS   = --cpu 65816 -I $(IDIR)
-CFLAGS   = --cpu 65816 -I $(IDIR) -O3
-LDFLAGS  = -C doc/lorom128.cfg -L $(LDIR)
-LDFLAGS2 = --lib $(TARGET_LIB)
-else
-CC      = gcc
+ifeq ($(CC65_TARGET),snes)
+CPU      := 65816
+LDCONFIG := lorom128.cfg
+BIN_EXT  := smc
 endif
+
+AS       := ca65
+CC       := cc65
+LD       := ld65
+AFLAGS   := --cpu $(CPU) -I $(IDIR)
+CFLAGS   := --cpu $(CPU) -I $(IDIR) -O3
+LDFLAGS  := -C $(CDIR)/$(LDCONFIG) -L $(LDIR)
+LDFLAGS2 := --lib $(CC65_TARGET).lib
+PROGRAM  := $(PROJECT_NAME).$(BIN_EXT)
 
 ########################################
 
