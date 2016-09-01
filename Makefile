@@ -48,6 +48,9 @@ $(TDIR)/%.o: $(SDIR)/%.asm
 $(BDIR)/$(PROGRAM): $(C_OBJ) $(A_OBJ)
 	$(LD) $(LDFLAGS) -o $@ $^ $(LDFLAGS2)
 
+crc32: $(BDIR)/$(PROGRAM)
+	@./get_crc32.sh $<
+
 play: $(BDIR)/$(PROGRAM)
 	$(EMU) $<
 
