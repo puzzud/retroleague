@@ -20,7 +20,7 @@ ifeq ($(CC65_TARGET),snes)
 CPU      := 65816
 LDCONFIG := lorom128.cfg
 BIN_EXT  := smc
-SNES_EMU ?= znes
+SNES_EMU ?= zsnes
 EMU      := $(SNES_EMU)
 endif
 
