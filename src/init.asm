@@ -5,6 +5,9 @@
 .import _Init
 .import _Update
 
+.importzp sp
+.import __BSS_START__,__BSS_SIZE__
+
 .export _Reset
 
 .segment "CODE"
@@ -18,8 +21,13 @@ _Reset:
   rep #$18         ; X/Y 16-bi, decimal mode off
   sep #$20         ; A 8-bit
   
-  ;ldx #$1fff       ; Set up the stack
-  ;txs
+  ldx #$1ff        ; Set up the CPU routine stack
+  txs
+  
+  lda #<(__BSS_START__+__BSS_SIZE__)
+  sta sp
+  lda #>(__BSS_START__+__BSS_SIZE__)
+  sta sp+1         ; Set argument stack ptr
   
   ; Clear PPU registers
   ldx #$33
