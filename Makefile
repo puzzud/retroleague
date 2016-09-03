@@ -9,8 +9,10 @@ CDIR = doc
 TDIR = build
 BDIR = bin
 
-SRC := $(wildcard $(SDIR)/*.c)
-SRC += $(wildcard $(SDIR)/*.asm)
+SRC := $(wildcard $(SDIR)/game/*.c)
+SRC += $(wildcard $(SDIR)/game/*.asm)
+SRC += $(wildcard $(SDIR)/$(CC65_TARGET)/*.c)
+SRC += $(wildcard $(SDIR)/$(CC65_TARGET)/*.asm)
 
 ASM := $(patsubst %.c,%.asm,$(SRC))
 OBJ := $(addprefix $(TDIR)/$(CC65_TARGET)/,$(notdir $(patsubst %.asm,%.o,$(ASM))))
@@ -40,11 +42,14 @@ all: $(BDIR)/$(PROGRAM)
 
 %.asm: %.c
 	$(CC) $(CFLAGS) $< -o $@
-	
+
 $(TDIR)/$(CC65_TARGET):
 	@mkdir $@
 
-$(TDIR)/$(CC65_TARGET)/%.o: $(SDIR)/%.asm | $(TDIR)/$(CC65_TARGET)
+$(TDIR)/$(CC65_TARGET)/%.o: $(SDIR)/game/%.asm | $(TDIR)/$(CC65_TARGET)
+	$(AS) $(AFLAGS) $< -o $@
+
+$(TDIR)/$(CC65_TARGET)/%.o: $(SDIR)/$(CC65_TARGET)/%.asm | $(TDIR)/$(CC65_TARGET)
 	$(AS) $(AFLAGS) $< -o $@
 
 $(BDIR)/$(PROGRAM): $(OBJ)
