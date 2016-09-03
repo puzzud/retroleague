@@ -2,6 +2,8 @@ PROJECT_NAME = retroleague
 
 CC65_TARGET ?= snes
 
+CTARGET = __$(shell echo $(CC65_TARGET) | tr a-z A-Z)__
+
 SDIR = src
 IDIR = include
 LDIR = lib
@@ -37,7 +39,7 @@ AS       := ca65
 CC       := cc65
 LD       := ld65
 AFLAGS   := --cpu $(CPU) -I $(IDIR)
-CFLAGS   := -t $(CC65_TARGET) --cpu $(CPU) -I $(IDIR) -O3
+CFLAGS   := --cpu $(CPU) -I $(IDIR) -O3 -D$(CTARGET)
 LDFLAGS  := -C $(CDIR)/$(LDCONFIG) -L $(LDIR)
 LDFLAGS2 := --lib $(CC65_TARGET).lib
 PROGRAM  := $(PROJECT_NAME).$(BIN_EXT)
