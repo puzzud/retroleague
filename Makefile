@@ -9,12 +9,11 @@ CDIR = doc
 TDIR = build
 BDIR = bin
 
-C_SRC := $(wildcard $(SDIR)/*.c)
-A_SRC := $(wildcard $(SDIR)/*.asm)
+SRC := $(wildcard $(SDIR)/*.c)
+SRC += $(wildcard $(SDIR)/*.asm)
 
-C_ASM := $(patsubst %.c,%.asm,$(C_SRC))
-C_OBJ := $(addprefix $(TDIR)/$(CC65_TARGET)/,$(notdir $(patsubst %.c,%.o,$(C_SRC))))
-A_OBJ := $(addprefix $(TDIR)/$(CC65_TARGET)/,$(notdir $(patsubst %.asm,%.o,$(A_SRC))))
+ASM := $(patsubst %.c,%.asm,$(SRC))
+OBJ := $(addprefix $(TDIR)/$(CC65_TARGET)/,$(notdir $(patsubst %.asm,%.o,$(ASM))))
 
 ifeq ($(CC65_TARGET),snes)
 CPU      := 65816
@@ -48,7 +47,7 @@ $(TDIR)/$(CC65_TARGET):
 $(TDIR)/$(CC65_TARGET)/%.o: $(SDIR)/%.asm | $(TDIR)/$(CC65_TARGET)
 	$(AS) $(AFLAGS) $< -o $@
 
-$(BDIR)/$(PROGRAM): $(C_OBJ) $(A_OBJ)
+$(BDIR)/$(PROGRAM): $(OBJ)
 	$(LD) $(LDFLAGS) -o $@ $^ $(LDFLAGS2)
 
 crc32: $(BDIR)/$(PROGRAM)
