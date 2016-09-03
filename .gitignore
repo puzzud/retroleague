@@ -1,4 +1,6 @@
-/bin/*.smc
+/bin/*
 /build/*
 /lib/*.o
+/lib/c64.lib
+/lib/nes.lib
 /src/*.o

@@ -1,7 +1,7 @@
 #include "system.h"
 
 void __fastcall__ InitVideo(void);
-void __fastcall__ SetBackgroundColor(void);
+void __fastcall__ SetBackgroundColor(unsigned char color);
 
 void Init(void)
 {
@@ -15,15 +15,12 @@ void Update(void)
 
 void InitVideo(void)
 {
-  SetBackgroundColor();
-  
-  // Maximum screen brightness.
-  SET_MEMORY(0x2100, 0x0f)
+  SetBackgroundColor(0);
 }
 
-void SetBackgroundColor(void)
+void SetBackgroundColor(unsigned char color)
 {
-  // Set background color to $03e0.
-  SET_MEMORY(0x2122, 0xe0)
-  SET_MEMORY(0x2122, 0x03)
+#if defined(__C64__)
+  SET_MEMORY(53281l, color)
+#endif
 }

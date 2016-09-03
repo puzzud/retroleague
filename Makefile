@@ -17,6 +17,14 @@ SRC += $(wildcard $(SDIR)/$(CC65_TARGET)/*.asm)
 ASM := $(patsubst %.c,%.asm,$(SRC))
 OBJ := $(addprefix $(TDIR)/$(CC65_TARGET)/,$(notdir $(patsubst %.asm,%.o,$(ASM))))
 
+ifeq ($(CC65_TARGET),c64)
+CPU      := 6502
+LDCONFIG := c64.cfg
+BIN_EXT  := prg
+C64_EMU  ?= x64
+EMU      := $(C64_EMU)
+endif
+
 ifeq ($(CC65_TARGET),snes)
 CPU      := 65816
 LDCONFIG := lorom128.cfg
@@ -29,7 +37,7 @@ AS       := ca65
 CC       := cc65
 LD       := ld65
 AFLAGS   := --cpu $(CPU) -I $(IDIR)
-CFLAGS   := --cpu $(CPU) -I $(IDIR) -O3
+CFLAGS   := -t $(CC65_TARGET) --cpu $(CPU) -I $(IDIR) -O3
 LDFLAGS  := -C $(CDIR)/$(LDCONFIG) -L $(LDIR)
 LDFLAGS2 := --lib $(CC65_TARGET).lib
 PROGRAM  := $(PROJECT_NAME).$(BIN_EXT)
