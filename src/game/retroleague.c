@@ -40,4 +40,13 @@ void SetBackgroundColor(unsigned char color)
   SET_MEMORY(0x2007, 0x0f)
   SET_MEMORY(0x2007, 0x0f)
 #endif
+
+#if defined(__SNES__)
+  color += 0xc0;
+  
+  SET_MEMORY(0x2122, color)
+  SET_MEMORY(0x2122, 0x03)
+  
+  SET_MEMORY(0x2100, 0x0f)
+#endif
 }

@@ -24,7 +24,9 @@ do
   f_wo_ext="${f%.*}"
 
   echo "$CC65_LIBSRC_RUNTIME/$f"
-  ca65 --cpu 65816 "$CC65_LIBSRC_RUNTIME/$f" -o lib/$f_wo_ext.o
+  flags=
+  #flags="--cpu 65816 --smart" 
+  ca65 $flags "$CC65_LIBSRC_RUNTIME/$f" -o lib/$f_wo_ext.o
   
   ar65 a lib/snes.lib lib/$f_wo_ext.o
 done
