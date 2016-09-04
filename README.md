@@ -21,6 +21,7 @@ An game programmed in C and 6502 & 65816 Assembly.
  - cd cc65; make
  - export CC65_HOME=/path/to/cc65
  - export PATH=$PATH:$CC65_HOME
+ - cp $CC65_HOME/lib/nes.lib retroleague/lib
  - cd retroleague; make
  - Open retroleague/bin/retroleague.nes in an appropriate emulator.
 
