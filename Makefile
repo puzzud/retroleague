@@ -1,6 +1,6 @@
 PROJECT_NAME = retroleague
 
-CC65_TARGET ?= snes
+CC65_TARGET ?= nes
 
 CTARGET = __$(shell echo $(CC65_TARGET) | tr a-z A-Z)__
 
@@ -25,6 +25,14 @@ LDCONFIG := c64.cfg
 BIN_EXT  := prg
 C64_EMU  ?= x64
 EMU      := $(C64_EMU)
+endif
+
+ifeq ($(CC65_TARGET),nes)
+CPU      := 6502
+LDCONFIG := nes_mmc0.cfg
+BIN_EXT  := nes
+NES_EMU  ?= fceux
+EMU      := $(NES_EMU)
 endif
 
 ifeq ($(CC65_TARGET),snes)
