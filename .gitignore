@@ -4,3 +4,5 @@
 /lib/c64.lib
 /lib/nes.lib
 /src/*.o
+/graphics/temp
+*.directory
