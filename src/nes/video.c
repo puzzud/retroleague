@@ -2,54 +2,107 @@
 
 #include "system.h"
 
-const unsigned char Palette[] =
+#define PALETTE_BYTE_SIZE     NUMBER_OF_COLORS_PER_PALETTE_ENTRY * NUMBER_OF_ENTRIES_PER_PALETTE
+
+enum PaletteUpdateMode
 {
-  0x1f, 0x30, 0x20, 0x10,
-  0x1f, 0x30, 0x20, 0x10,
-  0x1f, 0x30, 0x20, 0x10,
-  0x1f, 0x30, 0x20, 0x10
+  PALETTE_UPDATE_MODE_ALL = 0,
+  PALETTE_UPDATE_MODE_CHARACTER,
+  PALETTE_UPDATE_MODE_SPRITE
 };
+
+unsigned char CharacterPalette[PALETTE_BYTE_SIZE];
+unsigned char SpritePalette[PALETTE_BYTE_SIZE];
 
 unsigned char index;
 unsigned char character;
 
+extern unsigned char UpdatePaletteFlag;
+#pragma zpsym ("UpdatePaletteFlag")
+
+void __fastcall__ SetColor(unsigned char index, unsigned char color);
+void __fastcall__ UpdatePalette(unsigned char id);
+
 void __fastcall__ InitVideo(void)
 {
-  //SetBackgroundColor(0);
-  
   // Turn off the screen.
   *PPU_CTRL1 = 0;
   *PPU_CTRL2 = 0;
 
-  // Load palette.
-  *PPU_VRAM_ADDR2 = 0x3f;
-  *PPU_VRAM_ADDR2 = 0x00;
-  for(index = 0; index < sizeof(Palette); ++index)
-  {
-    *PPU_VRAM_IO = Palette[index];
-  }
+  UpdatePaletteFlag = 1;
 
   // Rurn on screen.
   *PPU_CTRL1 = 0x90;
   *PPU_CTRL2 = 0x1e;
 }
 
+void __fastcall__ UpdatePalette(unsigned char updateMode)
+{
+  *PPU_VRAM_ADDR2 = 0x3f;
+  
+  index = 0;
+  
+  if(updateMode == PALETTE_UPDATE_MODE_CHARACTER)
+  {
+    *PPU_VRAM_ADDR2 = 0x00;
+    
+    for(; index < PALETTE_BYTE_SIZE; ++index)
+    {
+      *PPU_VRAM_IO = CharacterPalette[index];
+    }
+  }
+  else
+  if(updateMode == PALETTE_UPDATE_MODE_SPRITE)
+  {
+    *PPU_VRAM_ADDR2 = 0x10;
+    
+    for(; index < PALETTE_BYTE_SIZE; ++index)
+    {
+      *PPU_VRAM_IO = SpritePalette[index];
+    }
+  }
+  else // PALETTE_UPDATE_MODE_ALL
+  {
+    *PPU_VRAM_ADDR2 = 0x00;
+    
+    for(; index < PALETTE_BYTE_SIZE; ++index)
+    {
+      *PPU_VRAM_IO = CharacterPalette[index];
+    }
+    
+    for(index = 0; index < PALETTE_BYTE_SIZE; ++index)
+    {
+      *PPU_VRAM_IO = SpritePalette[index];
+    }
+  }
+  
+  // TODO: Why is this needed?
+  *PPU_VRAM_ADDR2 = 0;
+  *PPU_VRAM_ADDR2 = 0;
+  
+  UpdatePaletteFlag = 0;
+}
+
 void __fastcall__ SetBackgroundColor(unsigned char color)
 {
-  // Increase this value just so it's not black.
-  color += 0x28;
+  // Write to sprite cache palette entry 0
+  // (should act as background).
+  SpritePalette[0] =
+  CharacterPalette[0 * NUMBER_OF_COLORS_PER_PALETTE_ENTRY] =
+  CharacterPalette[1 * NUMBER_OF_COLORS_PER_PALETTE_ENTRY] =
+  CharacterPalette[2 * NUMBER_OF_COLORS_PER_PALETTE_ENTRY] =
+  CharacterPalette[3 * NUMBER_OF_COLORS_PER_PALETTE_ENTRY] = color;
   
-  // TODO: Use palette shadow memory instead.
-  // TODO: Set up mechanism to update palette during NMI.
-  asm("lda $2002");
+  // Flag video engine to update palette.
+  UpdatePaletteFlag = 1;
+}
+
+void __fastcall__ SetCharacterColor(unsigned char index, unsigned char color)
+{
+  CharacterPalette[index] = color;
   
-  SET_MEMORY(0x2006, 0x3f)
-  SET_MEMORY(0x2006, 0x10)
-  
-  SET_MEMORY(0x2007, color)
-  SET_MEMORY(0x2007, 0x0f)
-  SET_MEMORY(0x2007, 0x0f)
-  SET_MEMORY(0x2007, 0x0f)
+  // Flag video engine to update palette.
+  UpdatePaletteFlag = 1;
 }
 
 void __fastcall__ PrintText(const unsigned char* text, unsigned char x, unsigned char y)

@@ -19,6 +19,7 @@
 
 extern void __fastcall__ InitVideo(void);
 extern void __fastcall__ SetBackgroundColor(unsigned char color);
+extern void __fastcall__ SetCharacterColor(unsigned char index, unsigned char color);
 extern void __fastcall__ PrintText(const unsigned char* text, unsigned char x, unsigned char y);
 
 #endif

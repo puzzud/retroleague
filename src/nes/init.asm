@@ -1,16 +1,22 @@
 .import _Init
 .import _Update
 
+.import _UpdatePalette
+
 .importzp sp
 .import __RAM_START__,__RAM_SIZE__
 
 .export Reset
+.exportzp _UpdatePaletteFlag
 
 .include "nes.inc"
 
 .segment "ZEROPAGE"
 
 NmiStatus:
+  .res 1
+  
+_UpdatePaletteFlag:
   .res 1
 
 .segment "CODE"
@@ -111,9 +117,14 @@ NmiRoutine:
   tya
   pha
   
-  ; TODO: Update video here.
+  ; Update video.
+  lda _UpdatePaletteFlag
+  beq @nmiFinished
   
-NmiFinished:
+  lda #0
+  jsr _UpdatePalette
+  
+@nmiFinished:
   lda #1
   sta NmiStatus
   
@@ -123,9 +134,9 @@ NmiFinished:
   tax
   pla
   plp
-  
+
   rti
-  
+    
 ;------------------------------------------------------------------
 IrqRoutine:
   rti
