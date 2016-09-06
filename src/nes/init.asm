@@ -11,7 +11,7 @@
 .segment "ZEROPAGE"
 
 NmiStatus:
-  .byte 0
+  .res 1
 
 .segment "CODE"
 
@@ -81,17 +81,23 @@ waitSync2:
   bit PPU_STATUS
   bpl @waitSync2Loop
 
-  ; Enable NMI.
-  lda #%10000000
-  sta PPU_CTRL1
-
   lda #0
   sta PPU_VRAM_ADDR1
   sta PPU_VRAM_ADDR1
 
   jsr _Init
   
+  ; Enable NMI.
+  lda #%10000000
+  sta PPU_CTRL1
+  
 @mainLoop:
+  lda NmiStatus
+  beq @mainLoop
+  
+  lda #0
+  sta NmiStatus
+  
   jsr _Update
 
   jmp @mainLoop

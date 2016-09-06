@@ -2,8 +2,6 @@
 
 #include "system.h"
 
-extern const unsigned char GameTitle[];
-
 const unsigned char Palette[] =
 {
   0x1f, 0x30, 0x20, 0x10,
@@ -30,14 +28,6 @@ void __fastcall__ InitVideo(void)
   {
     *PPU_VRAM_IO = Palette[index];
   }
-  
-  PrintText(GameTitle, 0, 1);
-
-  // Reset the scroll position.
-  *PPU_VRAM_ADDR2 = 0;
-  *PPU_VRAM_ADDR2 = 0;
-  *PPU_VRAM_ADDR1 = 0;
-  *PPU_VRAM_ADDR1 = 0;
 
   // Rurn on screen.
   *PPU_CTRL1 = 0x90;
@@ -66,7 +56,7 @@ void __fastcall__ PrintText(const unsigned char* text, unsigned char x, unsigned
 {
   // PPU 0x2020 is upper left corner of visible screen.
   *PPU_VRAM_ADDR2 = 0x20;
-  *PPU_VRAM_ADDR2 = 0x20 + x;
+  *PPU_VRAM_ADDR2 = 0x20;
   
   index = -1;
   do
@@ -75,4 +65,10 @@ void __fastcall__ PrintText(const unsigned char* text, unsigned char x, unsigned
     *PPU_VRAM_IO = character;
   }
   while(character != 0);
+
+  // Reset the scroll position.
+  *PPU_VRAM_ADDR2 = 0;
+  *PPU_VRAM_ADDR2 = 0;
+  *PPU_VRAM_ADDR1 = 0;
+  *PPU_VRAM_ADDR1 = 0;
 }

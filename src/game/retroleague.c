@@ -9,5 +9,5 @@ void Init(void)
 
 void Update(void)
 {
-
+  PrintText(GameTitle, 0, 0);
 }
