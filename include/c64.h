@@ -200,4 +200,23 @@
 
 //sprite number constants
 #define SPRITE_BASE                    64
+
+#define JOYSTICK_UP             0x01
+#define JOYSTICK_DOWN           0x02
+#define JOYSTICK_LEFT           0x04
+#define JOYSTICK_RIGHT          0x08
+#define JOYSTICK_BUTTON0        0x10
+#define JOYSTICK_BUTTON1        0x20
+#define JOYSTICK_BUTTON2        0x40
+#define JOYSTICK_BUTTON3        0x80
+
+#define CONTROLLER_LEFT         JOYSTICK_LEFT
+#define CONTROLLER_RIGHT        JOYSTICK_RIGHT
+#define CONTROLLER_UP           JOYSTICK_UP
+#define CONTROLLER_DOWN         JOYSTICK_DOWN
+#define CONTROLLER_BUTTON0      JOYSTICK_BUTTON0
+#define CONTROLLER_BUTTON1      JOYSTICK_BUTTON1
+#define CONTROLLER_BUTTON2      JOYSTICK_BUTTON2
+#define CONTROLLER_BUTTON3      JOYSTICK_BUTTON3
+
 #endif

@@ -1,6 +1,8 @@
 .import _Init
 .import _Update
 
+.import _UpdateInput
+
 .importzp sp
 .import __BSS_START__, __BSS_SIZE__
 
@@ -52,6 +54,8 @@ Reset:
   jsr _Init
   
 @mainLoop:
+  jsr _UpdateInput
+
   jsr _Update
   
   ; Wait for the raster to reach line $f8 (248)

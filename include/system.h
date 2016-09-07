@@ -17,6 +17,14 @@
 #define GET_MEMORY(A)        *BYTE_FROM_ADDRESS(A);
 #define SET_MEMORY(A, V)     *BYTE_FROM_ADDRESS(A) = V;
 
+// Input
+extern unsigned char ControllerButtons[];
+extern unsigned char ControllerButtonsPressed[];
+
+#pragma zpsym ("ControllerButtons")
+#pragma zpsym ("ControllerButtonsPressed")
+
+// Video
 extern void __fastcall__ InitVideo(void);
 extern void __fastcall__ SetBackgroundColor(unsigned char color);
 extern void __fastcall__ SetCharacterColor(unsigned char index, unsigned char color);

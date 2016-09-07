@@ -1,6 +1,8 @@
 .import _Init
 .import _Update
 
+.import _UpdateInput
+
 .import _UpdatePalette
 
 .importzp sp
@@ -103,6 +105,8 @@ waitSync2:
   
   lda #0
   sta NmiStatus
+  
+  jsr _UpdateInput
   
   jsr _Update
 

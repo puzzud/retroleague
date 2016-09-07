@@ -24,6 +24,11 @@ void Init(void)
 
 void Update(void)
 {
+  if((ControllerButtonsPressed[0] & CONTROLLER_BUTTON0) > 0)
+  {
+    count = -2;
+  }
+  
   if(++count > 64)
   {
     count = 0;
