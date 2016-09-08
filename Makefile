@@ -58,6 +58,7 @@ PROGRAM  := $(PROJECT_NAME).$(BIN_EXT)
 .PHONY: all clean
 all: $(BDIR)/$(PROGRAM)
 
+#.PRECIOUS: %_c.asm
 %_c.asm: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
