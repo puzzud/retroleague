@@ -16,7 +16,7 @@ SRC += $(wildcard $(SDIR)/game/*.asm)
 SRC += $(wildcard $(SDIR)/$(CC65_TARGET)/*.c)
 SRC += $(wildcard $(SDIR)/$(CC65_TARGET)/*.asm)
 
-ASM := $(patsubst %.c,%.asm,$(SRC))
+ASM := $(patsubst %.c,%_c.asm,$(SRC))
 OBJ := $(addprefix $(TDIR)/$(CC65_TARGET)/,$(notdir $(patsubst %.asm,%.o,$(ASM))))
 
 ifeq ($(CC65_TARGET),c64)
@@ -58,7 +58,7 @@ PROGRAM  := $(PROJECT_NAME).$(BIN_EXT)
 .PHONY: all clean
 all: $(BDIR)/$(PROGRAM)
 
-%.asm: %.c
+%_c.asm: %.c
 	$(CC) $(CFLAGS) $< -o $@
 
 $(TDIR)/$(CC65_TARGET):
