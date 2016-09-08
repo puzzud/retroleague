@@ -28,9 +28,9 @@ _PrintText:
   lda (sp),y
   tax
   
-  lda SCREEN_LINE_OFFSET_TABLE_HI,x
+  lda ScreenLineOffsetTableHi,x
   sta ptr2+1
-  lda SCREEN_LINE_OFFSET_TABLE_LO,x
+  lda ScreenLineOffsetTableLo,x
   sta ptr2
   
   ; A = ptr2
@@ -77,8 +77,15 @@ _PrintText:
 ;------------------------------------------------------------------
 ; NOTE: This macro seems to compensate for non-visible top 1 line of name table.
 .macro sloTable loOrHi, n
+  .local lineNumber
+  .if .paramcount > 1
+    lineNumber = n
+  .else
+    lineNumber = 0
+  .endif
+  
   .local address
-  address = (PPU_NAME_TABLE_0 + SCREEN_CHAR_WIDTH + (n * SCREEN_CHAR_WIDTH))
+  address = (PPU_NAME_TABLE_0 + SCREEN_CHAR_WIDTH + (lineNumber * SCREEN_CHAR_WIDTH))
 
   .if loOrHi = 0
     .byte <(address)
@@ -88,13 +95,14 @@ _PrintText:
     .byte >(address)
   .endif
   
-  .if n < SCREEN_CHAR_HEIGHT - 1
-    sloTable loOrHi, (n+1) ; NOTE: Wrapping parameter in parentheses is critical (bug?).
+  .if lineNumber < SCREEN_CHAR_HEIGHT - 1
+    sloTable loOrHi, (lineNumber+1) ; NOTE: Wrapping parameter in parentheses is critical (bug?).
   .endif
 .endmacro
 
-SCREEN_LINE_OFFSET_TABLE_LO:
-  sloTable 0, 0
+; Preprocessed table of PPU name table addresses for each start of a line.
+ScreenLineOffsetTableLo:
+  sloTable 0
 
-SCREEN_LINE_OFFSET_TABLE_HI:
-  sloTable 1, 0
+ScreenLineOffsetTableHi:
+  sloTable 1
