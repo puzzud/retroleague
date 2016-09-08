@@ -15,7 +15,6 @@ unsigned char CharacterPalette[PALETTE_BYTE_SIZE];
 unsigned char SpritePalette[PALETTE_BYTE_SIZE];
 
 unsigned char index;
-unsigned char character;
 
 extern unsigned char UpdatePaletteFlag;
 #pragma zpsym ("UpdatePaletteFlag")
@@ -103,25 +102,4 @@ void __fastcall__ SetCharacterColor(unsigned char index, unsigned char color)
   
   // Flag video engine to update palette.
   UpdatePaletteFlag = 1;
-}
-
-void __fastcall__ PrintText(const unsigned char* text, unsigned char x, unsigned char y)
-{
-  // PPU 0x2020 is upper left corner of visible screen.
-  *PPU_VRAM_ADDR2 = 0x20;
-  *PPU_VRAM_ADDR2 = 0x20;
-  
-  index = -1;
-  do
-  {
-    character = text[++index];
-    *PPU_VRAM_IO = character;
-  }
-  while(character != 0);
-
-  // Reset the scroll position.
-  *PPU_VRAM_ADDR2 = 0;
-  *PPU_VRAM_ADDR2 = 0;
-  *PPU_VRAM_ADDR1 = 0;
-  *PPU_VRAM_ADDR1 = 0;
 }

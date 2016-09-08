@@ -19,7 +19,7 @@ void Init(void)
   
   // TODO: Placement of this PrintText can be
   // critical with respect to InitVideo.
-  PrintText(GameTitle, 0, 0);
+  PrintText(GameTitle, 1, 1);
 }
 
 void Update(void)
