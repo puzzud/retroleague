@@ -2,6 +2,7 @@
 .import _Update
 
 .import _UpdateInput
+.import _InitializeVideo
 
 .importzp sp
 .import __BSS_START__, __BSS_SIZE__
@@ -48,6 +49,8 @@ Reset:
   sta sp
   lda #>(__BSS_START__+__BSS_SIZE__)
   sta sp+1
+  
+  jsr _InitializeVideo
 
   cli
 
