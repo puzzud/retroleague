@@ -7,7 +7,7 @@ CTARGET = __$(shell echo $(CC65_TARGET) | tr a-z A-Z)__
 SDIR = src
 IDIR = include
 LDIR = lib
-CDIR = doc
+CDIR = cfg
 TDIR = build
 BDIR = bin
 
@@ -29,7 +29,7 @@ endif
 
 ifeq ($(CC65_TARGET),nes)
 CPU      := 6502
-LDCONFIG := nes_mmc0.cfg
+LDCONFIG := nes_nrom.cfg
 BIN_EXT  := nes
 NES_EMU  ?= fceux
 EMU      := $(NES_EMU)
@@ -37,7 +37,7 @@ endif
 
 ifeq ($(CC65_TARGET),snes)
 CPU      := 65816
-LDCONFIG := lorom128.cfg
+LDCONFIG := snes_lorom128.cfg
 BIN_EXT  := smc
 SNES_EMU ?= zsnes
 EMU      := $(SNES_EMU)
