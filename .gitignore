@@ -6,3 +6,4 @@
 /src/*.o
 /graphics/temp
 *.directory
+*Thumbs.db
