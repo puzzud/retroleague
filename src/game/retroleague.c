@@ -41,6 +41,9 @@ void Update(void)
   if((ControllerButtonsPressed[0] & TITLE_SCREEN_START_BUTTON) > 0)
   {
     count = -2;
+    
+    backgroundColor = TITLE_SCREEN_COLOR_TEXT;
+    SetBackgroundColor(backgroundColor);
   }
   
   if(++count > 64)
