@@ -1,0 +1,18 @@
+c64            | nes  | apple2
+-------------------------------
+black        0 | 0x0d | black
+white        1 | 0x20 | white
+red          2 | 0x17 |
+cyan         3 | 0x3c |
+purple       4 | 0x23 | purple
+green        5 | 0x2a | green
+blue         6 | 0x12 |
+yellow       7 | 0x38 |
+orange       8 | 0x26 | orange
+brown        9 | 0x18 |
+pink        10 | 0x35 |
+dark grey   11 | 0x2d |
+grey        12 | 0x00 |
+light green 13 | 0x29 |
+light blue  14 | 0x22 | blue
+light grey  15 | 0x10 |

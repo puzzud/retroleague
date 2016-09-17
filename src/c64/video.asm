@@ -28,6 +28,9 @@ _PrintColor:
 ;------------------------------------------------------------------
 _InitializeVideo:
   
+  lda #COLOR_BLACK
+  sta _PrintColor
+  
   lda #' '
   jsr FillScreen
 
@@ -230,6 +233,21 @@ _PrintText:
   lda (ptr1),y ; (ptr2+1,ptr2)=a=text[++y]
   sta (ptr2),y
   bne @printTextLoop
+
+  ; Switch ptr2 to point to color RAM.
+  clc
+  lda ptr2
+  adc #<(SCREEN_COLOR-SCREEN_CHAR)
+  sta ptr2
+  lda ptr2+1
+  adc #>(SCREEN_COLOR-SCREEN_CHAR)
+  sta ptr2+1
+  
+  lda _PrintColor
+@printTextColorLoop:
+  dey
+  sta (ptr2),y
+  bne @printTextColorLoop
 
   jmp incsp4
 

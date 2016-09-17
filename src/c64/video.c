@@ -2,6 +2,8 @@
 
 #include "system.h"
 
+extern unsigned char PrintColor;
+
 void __fastcall__ InitVideo(void)
 {
   
@@ -31,7 +33,14 @@ void __fastcall__ SetCharacterColor(unsigned char index, unsigned char color)
   
   if(index > 0)
   {
-    //SET_MEMORY(VIC_BG_COLOR1 + index - 1, color)
+    if(index == 1)
+    {
+      PrintColor = color;
+    }
+    else
+    {
+      //SET_MEMORY(VIC_BG_COLOR1 + index - 1, color)
+    }
   }
   else
   {

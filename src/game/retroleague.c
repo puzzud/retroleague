@@ -1,5 +1,7 @@
 #include "system.h"
 
+#include <retroleague.h>
+
 const unsigned char GameTitle[] = "THE RETRO LEAGUE";
 
 unsigned char count;
@@ -11,10 +13,10 @@ extern unsigned char TitleScreenLogoImage[];
 void Init(void)
 {
   // Set up palette.
-  foregroundColor = 0x28;
+  foregroundColor = TITLE_SCREEN_COLOR_LOGO;
   SetCharacterColor(1, foregroundColor);
   
-  backgroundColor = 0x1f;
+  backgroundColor = TITLE_SCREEN_COLOR_BG;
   SetBackgroundColor(backgroundColor);
   
   InitVideo();
