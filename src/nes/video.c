@@ -24,13 +24,19 @@ void __fastcall__ UpdatePalette(unsigned char id);
 
 void __fastcall__ InitVideo(void)
 {
+  
+}
+
+void __fastcall__ DisableVideo(void)
+{
   // Turn off the screen.
   *PPU_CTRL1 = 0;
   *PPU_CTRL2 = 0;
+}
 
-  UpdatePaletteFlag = 1;
-
-  // Rurn on screen.
+void __fastcall__ EnableVideo(void)
+{
+  // Turn on screen.
   *PPU_CTRL1 = 0x90;
   *PPU_CTRL2 = 0x1e;
 }

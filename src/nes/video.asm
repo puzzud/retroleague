@@ -1,6 +1,7 @@
 ; nes video.asm
 
 .export _PrintText
+.export _DrawImage
 
 .autoimport on
   
@@ -11,6 +12,15 @@
 .include "nes.inc"
 
 .segment "ZEROPAGE"
+
+ImageWidth:
+  .res 1
+  
+ImageHeight:
+  .res 1
+  
+DrawY:
+  .res 1
 
 .segment "CODE"
 
@@ -74,6 +84,100 @@ _PrintText:
 
   jmp incsp4
 
+; _DrawImage
+; Prints text string to an X,Y coordinate on the screen.
+;
+; inputs:
+;  - image: (sp[2],sp[1]), Pointer to an image map.
+;  - x: sp[0], X position to draw image (uppler left corner).
+;  - y: a, Y position to draw image (uppler left corner)
+_DrawImage:
+  jsr pusha ; TODO: It should be possible to not push A and just transfer it to X.
+  
+  clc ; (ptr+1,ptr)=&image
+  lda #0
+  ldy #2
+  adc (sp),y
+  sta ptr1
+  lda #0
+  iny
+  adc (sp),y
+  sta ptr1+1
+  
+  ; Retrieve image dimensions.
+  ldy #0
+  lda (ptr1),y
+  sta ImageWidth
+  iny
+  lda (ptr1),y
+  sta ImageHeight
+  
+  ; Move ptr1 beyond header.
+  clc
+  lda ptr1
+  adc #2
+  sta ptr1
+  lda #0
+  adc ptr1+1
+  sta ptr1+1
+    
+; Add x offset to screen start address.
+;   ; A = ptr2
+;   clc
+;   ldy #1 ; x
+;   adc (sp),y
+;   sta ptr2
+;   bcc @setVramAddress
+;   lda #0
+;   adc ptr2+1
+;   sta ptr2+1
+
+;   ldy #0 ; Y = 0; y
+;   lda (sp),y
+;   tax
+
+  ldx #0
+@drawImageYLoop:
+  lda ScreenLineOffsetTableHi,x
+  sta ptr2+1
+  lda ScreenLineOffsetTableLo,x
+  sta ptr2
+
+@setVramAddress:  
+  lda ptr2+1
+  sta PPU_VRAM_ADDR2
+  lda ptr2
+  sta PPU_VRAM_ADDR2
+  
+  ldy #$ff
+@drawImageXLoop:
+  iny
+  cpy ImageWidth
+  beq @drawImageXLoopEnd
+  
+  lda (ptr1),y
+  sta PPU_VRAM_IO
+  jmp @drawImageXLoop
+@drawImageXLoopEnd:
+  
+  inx
+  cpx ImageHeight
+  bcs @endDrawImage
+  
+  ; Move ptr1 to start of next row.
+  clc
+  lda ptr1
+  adc ImageWidth
+  sta ptr1
+  lda #0
+  adc ptr1+1
+  sta ptr1+1
+  
+  jmp @drawImageYLoop
+
+@endDrawImage:
+  jmp incsp4
+  
 ;------------------------------------------------------------------
 ; NOTE: This macro seems to compensate for non-visible top 1 line of name table.
 .macro sloTable loOrHi, n

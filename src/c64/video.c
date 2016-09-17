@@ -7,6 +7,16 @@ void __fastcall__ InitVideo(void)
   
 }
 
+void __fastcall__ DisableVideo(void)
+{
+  
+}
+
+void __fastcall__ EnableVideo(void)
+{
+  
+}
+
 void __fastcall__ SetBackgroundColor(unsigned char color)
 {
   SET_MEMORY(VIC_BG_COLOR0, color)
@@ -27,4 +37,9 @@ void __fastcall__ SetCharacterColor(unsigned char index, unsigned char color)
   {
     // ?
   }
+}
+
+void __fastcall__ DrawImage(const unsigned char* image, unsigned char x, unsigned char y)
+{
+  
 }

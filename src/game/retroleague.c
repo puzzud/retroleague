@@ -6,6 +6,8 @@ unsigned char count;
 unsigned char backgroundColor;
 unsigned char foregroundColor;
 
+extern unsigned char TitleScreenLogoImage[];
+
 void Init(void)
 {
   // Set up palette.
@@ -19,7 +21,14 @@ void Init(void)
   
   // TODO: Placement of this PrintText can be
   // critical with respect to InitVideo.
-  PrintText(GameTitle, 1, 1);
+  
+  DisableVideo();
+  
+  DrawImage(TitleScreenLogoImage, 0, 1);
+
+  PrintText("PRESS START", 0, 15);
+  
+  EnableVideo();
 }
 
 void Update(void)
