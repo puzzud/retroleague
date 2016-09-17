@@ -26,16 +26,19 @@ void Init(void)
   
   DisableVideo();
   
-  DrawImage(TitleScreenLogoImage, 6, 1);
+  DrawImage(TitleScreenLogoImage, TITLE_SCREEN_X_LOGO, TITLE_SCREEN_Y_LOGO);
+  
+  foregroundColor = TITLE_SCREEN_COLOR_TEXT;
+  SetCharacterColor(1, foregroundColor);
 
-  PrintText("PRESS START", 10, 18);
+  PrintText(TITLE_SCREEN_START_TEXT, TITLE_SCREEN_X_START_TEXT, TITLE_SCREEN_Y_START_TEXT);
   
   EnableVideo();
 }
 
 void Update(void)
 {
-  if((ControllerButtonsPressed[0] & CONTROLLER_BUTTON0) > 0)
+  if((ControllerButtonsPressed[0] & TITLE_SCREEN_START_BUTTON) > 0)
   {
     count = -2;
   }

@@ -18,9 +18,6 @@ ImageWidth:
   
 ImageHeight:
   .res 1
-  
-DrawY:
-  .res 1
 
 .segment "CODE"
 

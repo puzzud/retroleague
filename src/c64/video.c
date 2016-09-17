@@ -47,8 +47,3 @@ void __fastcall__ SetCharacterColor(unsigned char index, unsigned char color)
     // ?
   }
 }
-
-void __fastcall__ DrawImage(const unsigned char* image, unsigned char x, unsigned char y)
-{
-  
-}
