@@ -11,7 +11,7 @@ extern unsigned char TitleScreenLogoImage[];
 void Init(void)
 {
   // Set up palette.
-  foregroundColor = 0x30;
+  foregroundColor = 0x28;
   SetCharacterColor(1, foregroundColor);
   
   backgroundColor = 0x1f;
@@ -24,9 +24,9 @@ void Init(void)
   
   DisableVideo();
   
-  DrawImage(TitleScreenLogoImage, 0, 1);
+  DrawImage(TitleScreenLogoImage, 6, 1);
 
-  PrintText("PRESS START", 0, 15);
+  PrintText("PRESS START", 10, 18);
   
   EnableVideo();
 }
@@ -41,10 +41,5 @@ void Update(void)
   if(++count > 64)
   {
     count = 0;
-    
-    SetBackgroundColor(++backgroundColor);
-    
-    foregroundColor += 4;
-    SetCharacterColor(1, foregroundColor);
   }
 }

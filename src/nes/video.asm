@@ -120,30 +120,30 @@ _DrawImage:
   lda #0
   adc ptr1+1
   sta ptr1+1
-    
-; Add x offset to screen start address.
-;   ; A = ptr2
-;   clc
-;   ldy #1 ; x
-;   adc (sp),y
-;   sta ptr2
-;   bcc @setVramAddress
-;   lda #0
-;   adc ptr2+1
-;   sta ptr2+1
+  
+  ; Set up base target VRAM address.
+  ldy #0 ; Y = 0; y
+  lda (sp),y
+  tax
 
-;   ldy #0 ; Y = 0; y
-;   lda (sp),y
-;   tax
-
-  ldx #0
-@drawImageYLoop:
   lda ScreenLineOffsetTableHi,x
   sta ptr2+1
   lda ScreenLineOffsetTableLo,x
   sta ptr2
+  
+  ; Add x offset to screen start address.
+  clc
+  ldy #1 ; x
+  adc (sp),y
+  sta ptr2
+  bcc @endBaseVramAddress
+  lda #0
+  adc ptr2+1
+  sta ptr2+1
+@endBaseVramAddress:
 
-@setVramAddress:  
+  ldx #0
+@drawImageYLoop:
   lda ptr2+1
   sta PPU_VRAM_ADDR2
   lda ptr2
@@ -164,7 +164,7 @@ _DrawImage:
   cpx ImageHeight
   bcs @endDrawImage
   
-  ; Move ptr1 to start of next row.
+  ; Move ptr1 to start of next line.
   clc
   lda ptr1
   adc ImageWidth
@@ -172,6 +172,15 @@ _DrawImage:
   lda #0
   adc ptr1+1
   sta ptr1+1
+  
+  ; Move ptr2 to next line.
+  clc
+  lda ptr2
+  adc #SCREEN_CHAR_WIDTH
+  sta ptr2
+  lda #0
+  adc ptr2+1
+  sta ptr2+1
   
   jmp @drawImageYLoop
 
