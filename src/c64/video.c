@@ -11,12 +11,12 @@ extern unsigned char CHARSET[];
 
 void __fastcall__ DisableVideo(void)
 {
-  
+  *VIC_CTRL2 |= 0x10;
 }
 
 void __fastcall__ EnableVideo(void)
 {
-  
+  *VIC_CTRL2 &= 0xef;
 }
 
 void __fastcall__ SetBackgroundColor(unsigned char color)
