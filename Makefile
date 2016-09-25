@@ -86,7 +86,7 @@ $(BDIR)/$(PROJECT_NAME).d64: $(BDIR)/$(PROGRAM)
 crc32: $(BDIR)/$(PROGRAM)
 	@./get_crc32.sh $<
 
-play: $(BDIR)/$(PROGRAM)
+play: $(EXECUTABLE)
 	$(EMU) $<
 
 clean:
