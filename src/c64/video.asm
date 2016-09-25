@@ -50,6 +50,7 @@ _InitializeVideo:
 InitializeCharacterGraphics:
   ;VIC bank
   lda CIA2_PRA
+  ;and #%11111101  ; bank 2  base vic mem = $8000
   and #%11111100  ; bank 3  base vic mem = $c000
   sta CIA2_PRA
   
@@ -58,8 +59,14 @@ InitializeCharacterGraphics:
   sei
   
   ;set charset
+  ;lda #%00111110  ; screen mem = $8000 + $0c00 = $8c00
+  ;                ; char mem   = $8000 + $3800 = $b800
+  
   lda #%00111100  ; screen mem = $c000 + $0c00 = $cc00
-                  ; char mem   = $c000 + $f000 = $f000
+                  ; char mem   = $c000 + $3000 = $f000
+  
+  ; screen mem = (base VIC memory address) + (1024 * high nibble)
+  ; char mem   = (base VIC memory address) + (1024 * low nibble)
   sta VIC_VIDEO_ADR
 
   ;save old configuration
