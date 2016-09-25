@@ -72,7 +72,7 @@ $(TDIR)/$(CC65_TARGET)/%.o: $(SDIR)/$(CC65_TARGET)/%.asm | $(TDIR)/$(CC65_TARGET
 	$(AS) $(AFLAGS) $< -o $@
 
 $(BDIR)/$(PROGRAM): $(OBJ)
-	$(LD) $(LDFLAGS) -o $@ $^ $(LDFLAGS2)
+	$(LD) -Ln $(BDIR)/vice.lbl $(LDFLAGS) -o $@ $^ $(LDFLAGS2)
 
 crc32: $(BDIR)/$(PROGRAM)
 	@./get_crc32.sh $<
