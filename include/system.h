@@ -25,7 +25,6 @@ extern unsigned char ControllerButtonsPressed[];
 #pragma zpsym ("ControllerButtonsPressed")
 
 // Video
-extern void __fastcall__ InitVideo(void);
 extern void __fastcall__ DisableVideo(void);
 extern void __fastcall__ EnableVideo(void);
 extern void __fastcall__ SetBackgroundColor(unsigned char color);

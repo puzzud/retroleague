@@ -22,11 +22,6 @@ extern unsigned char UpdatePaletteFlag;
 void __fastcall__ SetColor(unsigned char index, unsigned char color);
 void __fastcall__ UpdatePalette(unsigned char id);
 
-void __fastcall__ InitVideo(void)
-{
-  
-}
-
 void __fastcall__ DisableVideo(void)
 {
   // Turn off the screen.

@@ -19,8 +19,6 @@ void Init(void)
   backgroundColor = TITLE_SCREEN_COLOR_BG;
   SetBackgroundColor(backgroundColor);
   
-  InitVideo();
-  
   // TODO: Placement of this PrintText can be
   // critical with respect to InitVideo.
   

@@ -4,10 +4,10 @@
 
 extern unsigned char PrintColor;
 
-void __fastcall__ InitVideo(void)
-{
-  
-}
+extern void __fastcall__ LoadFile(unsigned char* fileName, unsigned char* address);
+extern void InitializeVideo();
+
+extern unsigned char CHARSET[];
 
 void __fastcall__ DisableVideo(void)
 {
