@@ -25,6 +25,9 @@ LDCONFIG := c64.cfg
 BIN_EXT  := prg
 C64_EMU  ?= x64
 EMU      := $(C64_EMU)
+PROGRAM  := $(PROJECT_NAME).$(BIN_EXT)
+EXECUTABLE  := $(BDIR)/$(PROJECT_NAME).d64
+TARGET_RULE := $(EXECUTABLE)
 endif
 
 ifeq ($(CC65_TARGET),nes)
@@ -33,6 +36,8 @@ LDCONFIG := nes_nrom.cfg
 BIN_EXT  := nes
 NES_EMU  ?= fceux
 EMU      := $(NES_EMU)
+PROGRAM  := $(PROJECT_NAME).$(BIN_EXT)
+EXECUTABLE := $(BDIR)/$(PROGRAM)
 endif
 
 ifeq ($(CC65_TARGET),snes)
@@ -41,6 +46,8 @@ LDCONFIG := snes_lorom128.cfg
 BIN_EXT  := smc
 SNES_EMU ?= zsnes
 EMU      := $(SNES_EMU)
+PROGRAM  := $(PROJECT_NAME).$(BIN_EXT)
+EXECUTABLE := $(BDIR)/$(PROGRAM)
 endif
 
 AS       := ca65
@@ -50,13 +57,12 @@ AFLAGS   := --cpu $(CPU) -I $(IDIR)
 CFLAGS   := --cpu $(CPU) -I $(IDIR) -O3 -D$(CTARGET)
 LDFLAGS  := -C $(CDIR)/$(LDCONFIG) -L $(LDIR)
 LDFLAGS2 := --lib $(CC65_TARGET).lib
-PROGRAM  := $(PROJECT_NAME).$(BIN_EXT)
 
 ########################################
 
 .SUFFIXES:
 .PHONY: all clean
-all: $(BDIR)/$(PROGRAM)
+all: $(EXECUTABLE)
 
 #.PRECIOUS: %_c.asm
 %_c.asm: %.c
@@ -73,6 +79,9 @@ $(TDIR)/$(CC65_TARGET)/%.o: $(SDIR)/$(CC65_TARGET)/%.asm | $(TDIR)/$(CC65_TARGET
 
 $(BDIR)/$(PROGRAM): $(OBJ)
 	$(LD) -Ln $(BDIR)/vice.lbl $(LDFLAGS) -o $@ $^ $(LDFLAGS2)
+
+$(BDIR)/$(PROJECT_NAME).d64: $(BDIR)/$(PROGRAM)
+	@c1541 -format $(PROJECT_NAME),"88 2a" d64 $@ -write $< $(PROJECT_NAME)
 
 crc32: $(BDIR)/$(PROGRAM)
 	@./get_crc32.sh $<
