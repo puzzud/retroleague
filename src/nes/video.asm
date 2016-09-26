@@ -96,7 +96,7 @@ _PrintText:
   jsr SetCharacterAttribute
   
   iny
-  dec tmp3 ; TODO: Do every 2 characters to reduce redundancy.
+  dec tmp3
   bne @printColorLoop
   
   ; A = 0
@@ -283,6 +283,7 @@ _DrawImage:
   ; Set up base target VRAM address.
   ldy #0 ; Y = 0; y
   lda (sp),y
+  sta tmp2
   tax
 
   lda ScreenLineOffsetTableHi,x
@@ -291,9 +292,12 @@ _DrawImage:
   sta ptr2
   
   ; Add x offset to screen start address.
-  clc
   ldy #1 ; x
-  adc (sp),y
+  lda (sp),y
+  sta tmp1
+  
+  clc
+  adc ptr2
   sta ptr2
   bcc @endBaseVramAddress
   lda #0
@@ -320,6 +324,21 @@ _DrawImage:
   sta PPU_VRAM_IO
   jmp @drawImageXLoop
 @drawImageXLoopEnd:
+
+  sty tmp3 ; index for loop.
+
+  stx tmp4
+  
+  ldy tmp1 ; x
+  ldx tmp2 ; y
+@printColorLoop:
+  jsr SetCharacterAttribute
+  
+  iny
+  dec tmp3
+  bne @printColorLoop
+  
+  ldx tmp4
   
   inx
   cpx ImageHeight
@@ -342,6 +361,8 @@ _DrawImage:
   lda #0
   adc ptr2+1
   sta ptr2+1
+  
+  inc tmp2 ; ++y NOTE: Modifying cached y parameter.
   
   jmp @drawImageYLoop
 
