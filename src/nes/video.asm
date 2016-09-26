@@ -143,10 +143,8 @@ SetCharacterAttribute:
   tya
   pha
   
-  ; TODO: Note that for first attribute table,
-  ; reading Hi table is not necessary, because
-  ; high value on a standard NES does not change.
-  lda ScreenColorLineOffsetTableHi,x
+  ; Note that the high value on a standard NES will not change.
+  lda #>(PPU_ATTRIBUTE_TABLE_0)
   sta AttributePointer+1
   lda ScreenColorLineOffsetTableLo,x
   sta AttributePointer
@@ -157,10 +155,6 @@ SetCharacterAttribute:
   clc
   adc AttributePointer
   sta AttributePointer
-  bcc @endAddXOffsetToColorVram
-  lda #0 ; TODO: Note the Hi table statement above.
-  adc AttributePointer+1
-  sta AttributePointer+1
 @endAddXOffsetToColorVram:
  
 @getQuadrantNumber:
@@ -190,6 +184,8 @@ SetCharacterAttribute:
   sta PPU_VRAM_ADDR2
   lda AttributePointer
   sta PPU_VRAM_ADDR2
+  
+  ; Get existing attribute.
   lda PPU_VRAM_IO
   
   ldy #0
@@ -215,7 +211,7 @@ SetCharacterAttribute:
   ldx AttributeQuadrantNumber
   beq @endShiftUpAttributesLoop
   
-  clc ; NOTE: Technially, no C clear needed.
+  ;clc ; NOTE: Technially, no C clear needed.
 @shiftUpAttributesLoop:
   rol AttributeTemp
   rol
@@ -437,6 +433,6 @@ ScreenLineOffsetTableHi:
 ScreenColorLineOffsetTableLo:
   scloTable 0
   
-ScreenColorLineOffsetTableHi:
-  scloTable 1
+; ScreenColorLineOffsetTableHi:
+;   scloTable 1
   
