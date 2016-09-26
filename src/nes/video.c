@@ -2,7 +2,7 @@
 
 #include "system.h"
 
-#define PALETTE_BYTE_SIZE     NUMBER_OF_COLORS_PER_PALETTE_ENTRY * NUMBER_OF_ENTRIES_PER_PALETTE
+#define PALETTE_SIZE     NUMBER_OF_COLORS_PER_PALETTE_ENTRY * NUMBER_OF_ENTRIES_PER_PALETTE
 
 enum PaletteUpdateMode
 {
@@ -11,15 +11,17 @@ enum PaletteUpdateMode
   PALETTE_UPDATE_MODE_SPRITE
 };
 
-unsigned char CharacterPalette[PALETTE_BYTE_SIZE];
-unsigned char SpritePalette[PALETTE_BYTE_SIZE];
+unsigned char CharacterPalette[PALETTE_SIZE];
+unsigned char SpritePalette[PALETTE_SIZE];
 
-unsigned char index;
+extern unsigned char PrintColorSet;
+#pragma zpsym ("PrintColorSet")
 
 extern unsigned char UpdatePaletteFlag;
 #pragma zpsym ("UpdatePaletteFlag")
 
-void __fastcall__ SetColor(unsigned char index, unsigned char color);
+unsigned char VideoIndex;
+
 void __fastcall__ UpdatePalette(unsigned char id);
 
 void __fastcall__ DisableVideo(void)
@@ -40,15 +42,15 @@ void __fastcall__ UpdatePalette(unsigned char updateMode)
 {
   *PPU_VRAM_ADDR2 = 0x3f;
   
-  index = 0;
+  VideoIndex = 0;
   
   if(updateMode == PALETTE_UPDATE_MODE_CHARACTER)
   {
     *PPU_VRAM_ADDR2 = 0x00;
     
-    for(; index < PALETTE_BYTE_SIZE; ++index)
+    for(; VideoIndex < PALETTE_SIZE; ++VideoIndex)
     {
-      *PPU_VRAM_IO = CharacterPalette[index];
+      *PPU_VRAM_IO = CharacterPalette[VideoIndex];
     }
   }
   else
@@ -56,23 +58,23 @@ void __fastcall__ UpdatePalette(unsigned char updateMode)
   {
     *PPU_VRAM_ADDR2 = 0x10;
     
-    for(; index < PALETTE_BYTE_SIZE; ++index)
+    for(; VideoIndex < PALETTE_SIZE; ++VideoIndex)
     {
-      *PPU_VRAM_IO = SpritePalette[index];
+      *PPU_VRAM_IO = SpritePalette[VideoIndex];
     }
   }
   else // PALETTE_UPDATE_MODE_ALL
   {
     *PPU_VRAM_ADDR2 = 0x00;
     
-    for(; index < PALETTE_BYTE_SIZE; ++index)
+    for(; VideoIndex < PALETTE_SIZE; ++VideoIndex)
     {
-      *PPU_VRAM_IO = CharacterPalette[index];
+      *PPU_VRAM_IO = CharacterPalette[VideoIndex];
     }
     
-    for(index = 0; index < PALETTE_BYTE_SIZE; ++index)
+    for(VideoIndex = 0; VideoIndex < PALETTE_SIZE; ++VideoIndex)
     {
-      *PPU_VRAM_IO = SpritePalette[index];
+      *PPU_VRAM_IO = SpritePalette[VideoIndex];
     }
   }
   
@@ -98,9 +100,40 @@ void __fastcall__ SetBackgroundColor(unsigned char color)
 }
 
 void __fastcall__ SetCharacterColor(unsigned char index, unsigned char color)
-{
+{ 
   CharacterPalette[index] = color;
   
   // Flag video engine to update palette.
   UpdatePaletteFlag = 1;
+}
+
+void __fastcall__ SetCharacterPrimaryColor(unsigned char setIndex, unsigned char color)
+{ 
+  CharacterPalette[(setIndex * 4) + 1] = color;
+  
+  // Flag video engine to update palette.
+  UpdatePaletteFlag = 1;
+}
+
+void __fastcall__ SetCharacterSecondaryColor(unsigned char index, unsigned char color)
+{
+  VideoIndex = 1 + index;
+  CharacterPalette[VideoIndex] = color;
+  
+  VideoIndex += NUMBER_OF_COLORS_PER_PALETTE_ENTRY;
+  CharacterPalette[VideoIndex] = color;
+  
+  VideoIndex += NUMBER_OF_COLORS_PER_PALETTE_ENTRY;
+  CharacterPalette[VideoIndex] = color;
+  
+  VideoIndex += NUMBER_OF_COLORS_PER_PALETTE_ENTRY;
+  CharacterPalette[VideoIndex] = color;
+  
+  // Flag video engine to update palette.
+  UpdatePaletteFlag = 1;
+}
+
+void __fastcall__ SetPrintColor(unsigned char setIndex)
+{
+  PrintColorSet = setIndex;
 }

@@ -2,12 +2,19 @@
 
 #include "system.h"
 
+#define NUMBER_OF_CHARACTER_COLOR_SETS      4
+#define PALETTE_SIZE                        NUMBER_OF_CHARACTER_COLOR_SETS
+
 extern unsigned char PrintColor;
 
 extern void __fastcall__ LoadFile(unsigned char* fileName, unsigned char* address);
 extern void InitializeVideo();
 
 extern unsigned char CHARSET[];
+
+unsigned char VideoIndex;
+
+unsigned char CharacterPalette[NUMBER_OF_CHARACTER_COLOR_SETS]; 
 
 void __fastcall__ DisableVideo(void)
 {
@@ -27,23 +34,20 @@ void __fastcall__ SetBackgroundColor(unsigned char color)
 
 void __fastcall__ SetCharacterColor(unsigned char index, unsigned char color)
 {
-  // TODO: Determine best way to handle this function,
-  // as C64 is not limited to character graphics being
-  // of 4 different palette entries.
-  
-  if(index > 0)
-  {
-    if(index == 1)
-    {
-      PrintColor = color;
-    }
-    else
-    {
-      //SET_MEMORY(VIC_BG_COLOR1 + index - 1, color)
-    }
-  }
-  else
-  {
-    // ?
-  }
+  SetCharacterPrimaryColor(index, color);
+}
+
+void __fastcall__ SetCharacterPrimaryColor(unsigned char setIndex, unsigned char color)
+{ 
+  CharacterPalette[setIndex] = color;
+}
+
+void __fastcall__ SetCharacterSecondaryColor(unsigned char index, unsigned char color)
+{
+  *(VIC_BG_COLOR1 - 1 + index) = color;
+}
+
+void __fastcall__ SetPrintColor(unsigned char setIndex)
+{
+  PrintColor = CharacterPalette[setIndex];
 }

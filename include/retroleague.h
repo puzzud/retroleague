@@ -24,9 +24,7 @@
 
 #define TITLE_SCREEN_COLOR_BG       0x0d
 #define TITLE_SCREEN_COLOR_LOGO     0x28
-#define TITLE_SCREEN_COLOR_TEXT     0x28
-//#define TITLE_SCREEN_COLOR_TEXT     0x20
-
+#define TITLE_SCREEN_COLOR_TEXT     0x20
 
 #define TITLE_SCREEN_X_LOGO         6
 #define TITLE_SCREEN_Y_LOGO         1
