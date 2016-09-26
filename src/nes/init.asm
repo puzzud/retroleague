@@ -11,7 +11,7 @@
 .export Reset
 .exportzp _UpdatePaletteFlag
 
-.include "nes.inc"
+.include "nes.asm"
 
 .segment "ZEROPAGE"
 

@@ -4,6 +4,8 @@
 .import __HAS_SRAM__
 .import __MAPPER_NUM__
 
+.include "nes.asm"
+
 .segment "HEADER"
 
 iNesHeader:

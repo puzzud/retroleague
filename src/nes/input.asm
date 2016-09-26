@@ -5,7 +5,7 @@
 .exportzp _ControllerButtons
 .exportzp _ControllerButtonsPressed
 
-.include "nes.inc"
+.include "nes.asm"
 
 .segment "ZEROPAGE"
 

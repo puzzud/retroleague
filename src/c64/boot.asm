@@ -1,6 +1,6 @@
 .import Reset
 
-.include "util.inc"
+.include "util.asm"
 
 ; EXEHDR is expected to be at $0801
 ; NOTE: This block should be 15 or less bytes long.

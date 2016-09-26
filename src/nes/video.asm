@@ -10,7 +10,7 @@
 .importzp tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4
 .macpack longbranch
 
-.include "nes.inc"
+.include "nes.asm"
 
 .segment "ZEROPAGE"
 

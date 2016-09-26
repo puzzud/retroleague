@@ -15,7 +15,7 @@
 .import _CHARSET
 .import _SPRITES
 
-.include "c64.inc"
+.include "c64.asm"
 
 .segment "BSS"
 

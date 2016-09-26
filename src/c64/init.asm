@@ -18,7 +18,7 @@
 
 .export Reset
 
-.include "c64.inc"
+.include "c64.asm"
 
 .segment "BSS"
   

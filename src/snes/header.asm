@@ -2,6 +2,8 @@
 .i16    ; X/Y are 16 bits
 .a8     ; A is 8 bits
 
+.include "snes.asm"
+
 .segment "HEADER"      ; +$7FE0 in file
   .byte "ROM NAME"     ; ROM name. NOTE: Can be changed.
 

@@ -11,7 +11,7 @@
 
 .segment "CODE"
 
-.include "snes.inc"
+.include "snes.asm"
 
 Reset:
   sei              ; disable interrupts
