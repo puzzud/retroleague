@@ -209,11 +209,7 @@ CopySprites:
 ;  - x: sp[0], X position to write string.
 ;  - y: a, Y position to write string.
 _PrintText:
-  jsr pusha ; TODO: It should be possible to not push A and just transfer it to X.
-
-  ldy #0 ; Y = 0; y
-  lda (sp),y
-  tax
+  tax ; y
   
   lda ScreenLineOffsetTableHi,x
   sta ptr2+1
@@ -222,7 +218,7 @@ _PrintText:
   
   ; A = ptr2
   clc
-  ldy #1 ; x
+  ldy #0 ; x
   adc (sp),y
   sta ptr2
   bcc @setTextPointer
@@ -233,7 +229,7 @@ _PrintText:
 @setTextPointer:
   clc ; (ptr+1,ptr)=&text
   lda #0
-  ldy #2
+  ldy #1
   adc (sp),y
   sta ptr1
   lda #0
@@ -263,7 +259,7 @@ _PrintText:
   sta (ptr2),y
   bne @printTextColorLoop
 
-  jmp incsp4
+  jmp incsp3
 
 ; _DrawImage
 ; Prints text string to an X,Y coordinate on the screen.
@@ -273,11 +269,11 @@ _PrintText:
 ;  - x: sp[0], X position to draw image (uppler left corner).
 ;  - y: a, Y position to draw image (uppler left corner)
 _DrawImage:
-  jsr pusha ; TODO: It should be possible to not push A and just transfer it to X.
+  sta tmp2
   
   clc ; (ptr+1,ptr)=&image
   lda #0
-  ldy #2
+  ldy #1
   adc (sp),y
   sta ptr1
   lda #0
@@ -303,9 +299,7 @@ _DrawImage:
   sta ptr1+1
   
   ; Set up base target VRAM address.
-  ldy #0 ; Y = 0; y
-  lda (sp),y
-  tax
+  ldx tmp2 ; y
 
   lda ScreenLineOffsetTableHi,x
   sta ptr2+1
@@ -314,7 +308,7 @@ _DrawImage:
   
   ; Add x offset to screen start address.
   clc
-  ldy #1 ; x
+  ldy #0 ; x
   adc (sp),y
   sta ptr2
   lda #0
@@ -380,7 +374,7 @@ _DrawImage:
   jmp @drawImageYLoop
 
 @endDrawImage:
-  jmp incsp4
+  jmp incsp3
 
 ;------------------------------------------------------------------
 FillScreen:

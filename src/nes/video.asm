@@ -35,16 +35,13 @@ _PrintColorSet:
 ;  - x: sp[0], X position to write string.
 ;  - y: a, Y position to write string.
 _PrintText:
-  jsr pusha ; TODO: It should be possible to not push A and just transfer it to X.
-
-  ldy #1 ; x
+  sta tmp2 ; y
+  
+  ldy #0 ; x
   lda (sp),y
   sta tmp1
   
-  dey ;ldy #0 ; Y = 0; y
-  lda (sp),y
-  sta tmp2
-  tax
+  ldx tmp2
   
   lda ScreenLineOffsetTableHi,x
   sta ptr2+1
@@ -71,7 +68,7 @@ _PrintText:
   
   clc ; (ptr+1,ptr)=&text
   lda #0
-  ldy #2
+  ldy #1
   adc (sp),y
   sta ptr1
   lda #0
@@ -105,7 +102,7 @@ _PrintText:
   sta PPU_VRAM_ADDR1
   sta PPU_VRAM_ADDR1
 
-  jmp incsp4
+  jmp incsp3
 
 ; SetCharacterAttribute
 ; Sets the corresponding attribute table half-nibble to _PrintColorSet.
@@ -247,11 +244,11 @@ SetCharacterAttribute:
 ;  - x: sp[0], X position to draw image (uppler left corner).
 ;  - y: a, Y position to draw image (uppler left corner)
 _DrawImage:
-  jsr pusha ; TODO: It should be possible to not push A and just transfer it to X.
+  sta tmp2 ; y
   
   clc ; (ptr+1,ptr)=&image
   lda #0
-  ldy #2
+  ldy #1
   adc (sp),y
   sta ptr1
   lda #0
@@ -277,10 +274,7 @@ _DrawImage:
   sta ptr1+1
   
   ; Set up base target VRAM address.
-  ldy #0 ; Y = 0; y
-  lda (sp),y
-  sta tmp2
-  tax
+  ldx tmp2 ; y
 
   lda ScreenLineOffsetTableHi,x
   sta ptr2+1
@@ -288,7 +282,7 @@ _DrawImage:
   sta ptr2
   
   ; Add x offset to screen start address.
-  ldy #1 ; x
+  ldy #0 ; x
   lda (sp),y
   sta tmp1
   
@@ -363,7 +357,7 @@ _DrawImage:
   jmp @drawImageYLoop
 
 @endDrawImage:
-  jmp incsp4
+  jmp incsp3
   
 ;------------------------------------------------------------------
 ; NOTE: This macro seems to compensate for non-visible top 1 line of name table.
