@@ -374,13 +374,6 @@ _DrawImage:
   .endif
 .endmacro
 
-; Preprocessed table of PPU name table addresses for each start of a line.
-ScreenLineOffsetTableLo:
-  sloTable 0
-
-ScreenLineOffsetTableHi:
-  sloTable 1
-  
 ;------------------------------------------------------------------
 ; NOTE: This macro compensates for non-visible top 1 line of name table.
 ; TODO: Fix this macro to produce the table below!
@@ -407,71 +400,22 @@ ScreenLineOffsetTableHi:
   .endif
   
   .if lineNumber < SCREEN_CHAR_HEIGHT - 1
-    sloTable loOrHi, (lineNumber+1) ; NOTE: Wrapping parameter in parentheses is critical (bug?).
+    scloTable loOrHi, (lineNumber+1) ; NOTE: Wrapping parameter in parentheses is critical (bug?).
   .endif
 .endmacro
 
+
+; Preprocessed table of PPU name table addresses for each start of a line.
+ScreenLineOffsetTableLo:
+  sloTable 0
+
+ScreenLineOffsetTableHi:
+  sloTable 1  
+
 ; Preprocessed table of PPU attribute table addresses for each start of a line.
 ScreenColorLineOffsetTableLo:
-  ;scloTable 0
-  .byte <($23c0)
-  .byte <($23c0)
-  .byte <($23c0)
-  .byte <($23c8)
-  .byte <($23c8)
-  .byte <($23c8)
-  .byte <($23c8)
-  .byte <($23d0)
-  .byte <($23d0)
-  .byte <($23d0)
-  .byte <($23d0)
-  .byte <($23d8)
-  .byte <($23d8)
-  .byte <($23d8)
-  .byte <($23d8)
-  .byte <($23e0)
-  .byte <($23e0)
-  .byte <($23e0)
-  .byte <($23e0)
-  .byte <($23e8)
-  .byte <($23e8)
-  .byte <($23e8)
-  .byte <($23e8)
-  .byte <($23f0)
-  .byte <($23f0)
-  .byte <($23f0)
-  .byte <($23f0)
-  .byte <($23f8)
-  .byte <($23f8)
+  scloTable 0
   
 ScreenColorLineOffsetTableHi:
-  ;scloTable 1
-  .byte >($23c0)
-  .byte >($23c0)
-  .byte >($23c0)
-  .byte >($23c8)
-  .byte >($23c8)
-  .byte >($23c8)
-  .byte >($23c8)
-  .byte >($23d0)
-  .byte >($23d0)
-  .byte >($23d0)
-  .byte >($23d0)
-  .byte >($23d8)
-  .byte >($23d8)
-  .byte >($23d8)
-  .byte >($23d8)
-  .byte >($23e0)
-  .byte >($23e0)
-  .byte >($23e0)
-  .byte >($23e0)
-  .byte >($23e8)
-  .byte >($23e8)
-  .byte >($23e8)
-  .byte >($23e8)
-  .byte >($23f0)
-  .byte >($23f0)
-  .byte >($23f0)
-  .byte >($23f0)
-  .byte >($23f8)
-  .byte >($23f8)
+  scloTable 1
+  
