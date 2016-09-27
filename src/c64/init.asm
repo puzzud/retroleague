@@ -7,6 +7,9 @@
 .import _UpdateInput
 .import _InitializeVideo
 
+.import _InitializeMusic
+.import _ProcessMusic
+
 .autoimport on
   
 .importzp sp, sreg, regsave, regbank
@@ -65,6 +68,10 @@ Reset:
   sta LORAM
 
   jsr _InitializeVideo
+  jsr _InitializeAudio
+  
+  ; TODO: Music initialization shouldn't be here...
+  jsr _InitializeMusic
 
   cli
 
@@ -104,6 +111,8 @@ DefaultInterrupt:
   pha
   tya
   pha
+  
+  jsr _ProcessMusic
 
   lda #$ff
   sta VIC_IRR
