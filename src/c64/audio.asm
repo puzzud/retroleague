@@ -3,7 +3,25 @@
 .export _InitializeAudio
 .export _SoundKillAll
 
+.exportzp Voice1ControlCache
+.exportzp Voice2ControlCache
+.exportzp Voice3ControlCache
+
 .include "c64.asm"
+
+.segment "ZEROPAGE"
+
+; Caching of gating / waveform type SID registers
+; for each voice, because reading from them
+; is apparently unreliable.
+Voice1ControlCache:
+  .res 1
+  
+Voice2ControlCache:
+  .res 1
+  
+Voice3ControlCache:
+  .res 1
 
 .segment "CODE"
 
