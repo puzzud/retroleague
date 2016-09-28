@@ -26,7 +26,7 @@
 #define APU_PULSE2CTRL    BYTE_FROM_ADDRESS(0x4004)         // Pulse #2 Control Register (W)
 #define APU_PULSE2RAMP    BYTE_FROM_ADDRESS(0x4005)         // Pulse #2 Ramp Control Register (W)
 #define APU_PULSE2FTUNE   BYTE_FROM_ADDRESS(0x4006)         // Pulse #2 Fine Tune Register (W)
-#define APU_PULSE2STUNE   BYTE_FROM_ADDRESS(0x4007)         // Pulse #2 Coarse Tune Register (W)
+#define APU_PULSE2CTUNE   BYTE_FROM_ADDRESS(0x4007)         // Pulse #2 Coarse Tune Register (W)
 #define APU_TRICTRL1      BYTE_FROM_ADDRESS(0x4008)         // Triangle Control Register #1 (W)
 #define APU_TRICTRL2      BYTE_FROM_ADDRESS(0x4009)         // Triangle Control Register #2 (?)
 #define APU_TRIFREQ1      BYTE_FROM_ADDRESS(0x400A)         // Triangle Frequency Register #1 (W)

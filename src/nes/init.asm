@@ -5,6 +5,10 @@
 
 .import _UpdatePalette
 
+.import _InitializeAudio
+.import _InitializeMusic
+.import _ProcessMusic
+
 .importzp sp
 .import __RAM_START__,__RAM_SIZE__
 
@@ -95,6 +99,11 @@ waitSync2:
 
   jsr _Init
   
+  jsr _InitializeAudio
+  
+  ; TODO: This shouldn't go here
+  jsr _InitializeMusic
+  
   ; Enable NMI.
   lda #%10000000
   sta PPU_CTRL1
@@ -107,6 +116,8 @@ waitSync2:
   sta NmiStatus
   
   jsr _UpdateInput
+  
+  jsr _ProcessMusic
   
   jsr _Update
 
