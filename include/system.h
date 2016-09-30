@@ -35,4 +35,8 @@ extern void __fastcall__ SetPrintColor(unsigned char setIndex);
 extern void __fastcall__ PrintText(const unsigned char* text, unsigned char x, unsigned char y);
 extern void __fastcall__ DrawImage(const unsigned char* image, unsigned char x, unsigned char y);
 
+// Audio
+extern void __fastcall__ StartMusic(void);
+extern void __fastcall__ StopMusic(void);
+
 #endif

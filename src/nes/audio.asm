@@ -1,5 +1,7 @@
 ; nes audio.asm
 
+.import _InitializeMusicEngine
+
 .export _InitializeAudio
 .export _SoundKillAll
 

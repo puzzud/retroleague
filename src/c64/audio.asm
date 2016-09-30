@@ -1,5 +1,7 @@
 ; c64 audio.asm
 
+.import _InitializeMusicEngine
+
 .export _InitializeAudio
 .export _SoundKillAll
 
@@ -29,6 +31,7 @@ Voice3ControlCache:
 _InitializeAudio:
 InitializeAudio:
   jsr InitializeVoices
+  jsr _InitializeMusicEngine
 
   rts
 

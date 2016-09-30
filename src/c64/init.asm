@@ -7,7 +7,6 @@
 .import _UpdateInput
 .import _InitializeVideo
 
-.import _InitializeMusic
 .import _ProcessMusic
 
 .importzp _MusicStatus
@@ -71,9 +70,6 @@ Reset:
 
   jsr _InitializeVideo
   jsr _InitializeAudio
-  
-  ; TODO: Music initialization shouldn't be here...
-  jsr _InitializeMusic
 
   cli
 

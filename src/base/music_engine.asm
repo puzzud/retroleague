@@ -1,6 +1,8 @@
 ; base music_engine.asm
 
-.export _InitializeMusic
+.export _InitializeMusicEngine
+.export _StartMusic
+.export _StopMusic
 .export _ProcessMusic
 
 .exportzp _MusicStatus
@@ -127,6 +129,7 @@ MusicEngineTempFetch:
 ;
 ; It provides the following major routines:
 ; _InitializeMusic
+; _StartMusic
 ; _ProcessMusic
 
 ; The encoding for the music is as follows:
@@ -335,8 +338,32 @@ MusicEngineNoteFreqTableLo5C = MusicEngineNoteFreqTableLo1C + (NUMBER_OF_NOTES_I
 MusicEngineNoteFreqTableLo6C = MusicEngineNoteFreqTableLo1C + (NUMBER_OF_NOTES_IN_OCTAVE * 5)
 
 ;---------------------------------------
-_InitializeMusic:
-InitializeMusic:
+; InitializeMusicEngine
+;
+; inputs:
+;  - A: newMusicStatus, what to set MusicStatus to.
+_InitializeMusicEngine:
+InitializeMusicEngine:
+  jsr StopMusic
+
+  rts
+
+;---------------------------------------
+_StopMusic:
+StopMusic:
+  ; Disable all voice music processing.
+  lda #0
+  sta MusicEngineV1Active
+  sta MusicEngineV2Active
+  sta MusicEngineV3Active
+  
+  sta MusicStatus
+
+  rts
+  
+;---------------------------------------
+_StartMusic:
+StartMusic:
   lda #<VOICE_1_START_1
   sta MusicEngineV1MusicStart
   lda #>VOICE_1_START_1
@@ -384,13 +411,13 @@ InitializeMusic:
   sta MusicEngineV3Position+1
 
   ; Disable all voice music processing.
-  lda #0
-  sta MusicEngineV1Active
-  sta MusicEngineV2Active
-  sta MusicEngineV3Active
+  ldx #0
+  stx MusicEngineV1Active
+  stx MusicEngineV2Active
+  stx MusicEngineV3Active
   
-  lda #$ff
-  sta MusicStatus
+  dex ; X=$ff
+  stx MusicStatus
 
   rts
 

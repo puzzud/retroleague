@@ -25,6 +25,8 @@ void Init(void)
   PrintText(TITLE_SCREEN_START_TEXT, TITLE_SCREEN_X_START_TEXT, TITLE_SCREEN_Y_START_TEXT);
   
   EnableVideo();
+  
+  StartMusic();
 }
 
 void Update(void)
@@ -34,6 +36,8 @@ void Update(void)
     count = -2;
     
     SetBackgroundColor(TITLE_SCREEN_COLOR_TEXT);
+    
+    StopMusic();
   }
   
   if(++count > 64)

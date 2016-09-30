@@ -6,7 +6,6 @@
 .import _UpdatePalette
 
 .import _InitializeAudio
-.import _InitializeMusic
 .import _ProcessMusic
 
 .importzp _MusicStatus
@@ -102,9 +101,6 @@ waitSync2:
   jsr _Init
   
   jsr _InitializeAudio
-  
-  ; TODO: This shouldn't go here
-  jsr _InitializeMusic
   
   ; Enable NMI.
   lda #%10000000
