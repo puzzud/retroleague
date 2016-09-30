@@ -100,29 +100,6 @@ MusicEngineV2FreqTableLo = MusicEngineNoteFreqTableLo1C
 MusicEngineV3FreqTableHi = MusicEngineNoteFreqTableHi2C
 MusicEngineV3FreqTableLo = MusicEngineNoteFreqTableLo2C
 
-;---------------------------------------
-TargetInitializeMusic:
-  lda #%00111111 ; Enable all voices.
-  sta APU_CHANCTRL
-
-  lda #%00110000 ; Disable sweep?
-  sta APU_PULSE1RAMP
-  sta APU_PULSE2RAMP
-  
-  lda #%11110000 ; 50% duty, envelope and length counter off. No volume.
-  sta APU_PULSE1CTRL
-  sta Pulse1ControlCache
-  
-  lda #%11110000 ; 50% duty, envelope and length counter off. No volume.
-  sta APU_PULSE2CTRL
-  sta Pulse2ControlCache
-  
-  lda #%10000000 ; Length counter and linear control off. No sound.
-  sta APU_TRICTRL1
-  sta TriangleControlCache
-  
-  rts
-  
 ;------------------------------------------------------------------
 .macro setVoiceFrequencyV1
   ; Macro for voice 1 frequency load.

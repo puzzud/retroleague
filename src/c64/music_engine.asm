@@ -99,47 +99,6 @@ MusicEngineV2FreqTableLo = MusicEngineNoteFreqTableLo1C
 
 MusicEngineV3FreqTableHi = MusicEngineNoteFreqTableHi1C
 MusicEngineV3FreqTableLo = MusicEngineNoteFreqTableLo1C
-
-;---------------------------------------
-TargetInitializeMusic:
-  lda #$08        ; Set Voice2/3 Waveform (high nibble) to 8.
-  sta SID_PB1Hi
-  sta SID_PB2Hi
-  sta SID_PB3Hi
-  
-  lda #$09        ; Set Voice1/2/3 decay 2ms / attack 250ms.
-  sta SID_AD1
-  sta SID_AD2
-  sta SID_AD3
-  
-  lda #$40        ; Set Voice1/2/3 sustain 114ms / release 6ms.
-  sta SID_SUR1
-  sta SID_SUR2
-  sta SID_SUR3
-  
-  lda #0
-  sta SID_PB1Lo   ; Set Voice1/2/3 Waveform (low byte) to 0.
-  sta SID_PB2Lo
-  sta SID_PB3Lo
-
-  ; Gate all Voices silent.
-  ; Also, set their waveforms.
-  lda #%01000000 ; pulse
-  
-  sta SID_Ctl1
-  sta Voice1ControlCache
-  
-  sta SID_Ctl2
-  sta Voice2ControlCache
-  
-  lda #%00010000 ; triangle
-  sta SID_Ctl3
-  sta Voice3ControlCache
-
-  lda #15         ; Set volume 15 (max).
-  sta SID_Amp
-
-  rts
   
 ;------------------------------------------------------------------
 .macro setVoiceFrequencyV1

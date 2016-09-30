@@ -331,15 +331,6 @@ MusicEngineNoteFreqTableLo6C = MusicEngineNoteFreqTableLo1C + (NUMBER_OF_NOTES_I
 ;---------------------------------------
 _InitializeMusic:
 InitializeMusic:
-  jsr TargetInitializeMusic
-  
-  ; TODO: Perhaps it's possible to integrate
-  ; release time better with NES voice timed envelopes?
-  lda #$1e
-  sta MusicEngineV1TimeToRelease
-  sta MusicEngineV2TimeToRelease
-  sta MusicEngineV3TimeToRelease
-
   lda #<VOICE_1_START_1
   sta MusicEngineV1MusicStart
   lda #>VOICE_1_START_1
@@ -370,9 +361,15 @@ InitializeMusic:
   lda #>VOICE_3_END_1
   sta MusicEngineV3MusicEnd+1
   
-  ; Start of what this routine should do.
-  ; NOTE: Everything prior needs to at least be more generic.
-  lda MusicEngineV1MusicStart      ; Load music vectors into music engine voice music data vector (counters).
+  ; TODO: Perhaps it's possible to integrate
+  ; release time better with NES voice timed envelopes?
+  lda #$1e
+  sta MusicEngineV1TimeToRelease
+  sta MusicEngineV2TimeToRelease
+  sta MusicEngineV3TimeToRelease
+  
+  ; Load music vectors into music engine voice music data vector (counters).
+  lda MusicEngineV1MusicStart
   sta MusicEngineV1Position
   lda MusicEngineV1MusicStart+1
   sta MusicEngineV1Position+1

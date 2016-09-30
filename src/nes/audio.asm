@@ -30,8 +30,38 @@ InitializeAudio:
   lda #%01111111
   sta APU_CHANCTRL
   
+  jsr InitializeVoices
+  
   rts
 
+;---------------------------------------
+InitializeVoices:
+  ; Enable all voices.
+  lda #%00111111
+  sta APU_CHANCTRL
+
+  ; Disable sweep.
+  lda #%00110000
+  sta APU_PULSE1RAMP
+  sta APU_PULSE2RAMP
+  
+  ; 50% duty, envelope and length counter off. No volume.
+  lda #%11110000
+  sta APU_PULSE1CTRL
+  sta Pulse1ControlCache
+  
+  ; 50% duty, envelope and length counter off. No volume.
+  lda #%11110000
+  sta APU_PULSE2CTRL
+  sta Pulse2ControlCache
+  
+  ; Length counter and linear control off. No sound.
+  lda #%10000000
+  sta APU_TRICTRL1
+  sta TriangleControlCache
+  
+  rts
+  
 ;------------------------------------------------------------------
 _SoundKillAll:
 SoundKillAll:
