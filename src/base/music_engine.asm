@@ -3,6 +3,8 @@
 .export _InitializeMusic
 .export _ProcessMusic
 
+.exportzp _MusicStatus
+
 .export _MusicEngineV1MusicStart
 .export _MusicEngineV1MusicEnd
 .export _MusicEngineV2MusicStart
@@ -35,20 +37,20 @@ _MusicEngineV1MusicStart:
 MusicEngineV1MusicStart:
   .res 2
 
-_MusicEngineV1MusicEnd:
-MusicEngineV1MusicEnd:
-  .res 2
-
 _MusicEngineV2MusicStart:
 MusicEngineV2MusicStart:
   .res 2
 
-_MusicEngineV2MusicEnd:
-MusicEngineV2MusicEnd:
-  .res 2
-
 _MusicEngineV3MusicStart:
 MusicEngineV3MusicStart:
+  .res 2
+
+_MusicEngineV1MusicEnd:
+MusicEngineV1MusicEnd:
+  .res 2
+
+_MusicEngineV2MusicEnd:
+MusicEngineV2MusicEnd:
   .res 2
 
 _MusicEngineV3MusicEnd:
@@ -68,6 +70,10 @@ MusicEngineV3TimeToRelease:
   .res 1
 
 .segment "ZEROPAGE"
+
+_MusicStatus:
+MusicStatus:
+  .res 1
 
 MusicEngineV1Position:
   .res 2
@@ -336,30 +342,23 @@ InitializeMusic:
   lda #>VOICE_1_START_1
   sta MusicEngineV1MusicStart+1
   
-  lda #<VOICE_1_END_1
-  sta MusicEngineV1MusicEnd
-  lda #>VOICE_1_END_1
-  sta MusicEngineV1MusicEnd+1
-  
   lda #<VOICE_2_START_1
   sta MusicEngineV2MusicStart
   lda #>VOICE_2_START_1
   sta MusicEngineV2MusicStart+1
-  
-  lda #<VOICE_2_END_1
-  sta MusicEngineV2MusicEnd
-  lda #>VOICE_2_END_1
-  sta MusicEngineV2MusicEnd+1
   
   lda #<VOICE_3_START_1
   sta MusicEngineV3MusicStart
   lda #>VOICE_3_START_1
   sta MusicEngineV3MusicStart+1
 
-  lda #<VOICE_3_END_1
-  sta MusicEngineV3MusicEnd
-  lda #>VOICE_3_END_1
-  sta MusicEngineV3MusicEnd+1
+  ; Calculate these rather than setting them.
+  ldx #0
+  jsr CalculateMusicVoiceEnd
+  inx
+  jsr CalculateMusicVoiceEnd
+  inx
+  jsr CalculateMusicVoiceEnd
   
   ; TODO: Perhaps it's possible to integrate
   ; release time better with NES voice timed envelopes?
@@ -389,9 +388,77 @@ InitializeMusic:
   sta MusicEngineV1Active
   sta MusicEngineV2Active
   sta MusicEngineV3Active
+  
+  lda #$ff
+  sta MusicStatus
 
   rts
 
+; CalculateMusicVoiceEnd
+; Populate the corresponding MusicEngineV*MusicEnd
+; pointer from its current starting point.
+;
+; inputs:
+;  - voiceIndex: X, indicates which music voice to calculate.
+;  - MusicEngineV1MusicStart + (2 * voiceIndex): start of music pointer should be set before calling.
+;
+; outputs:
+;  - MusicEnd: ptr1, 
+CalculateMusicVoiceEnd:
+  ; Set the correct music start pointer according to voiceIndex.
+  txa
+  asl
+  tay
+
+  lda MusicEngineV1MusicStart,y
+  sta ptr1
+  lda MusicEngineV1MusicStart+1,y
+  sta ptr1+1
+  
+  ; Set the correct music start pointer according to voiceIndex.
+; @setMusicStartPointer:
+;   clc
+;   txa
+;   adc ptr1
+;   sta ptr1
+;   bcc @endSetMusicStartPointer
+;   inc ptr1+1
+; @endSetMusicStartPointer:
+
+@findNullMusicVoiceTerminator:
+  ldy #0
+@loop:
+  lda (ptr1),y
+  beq @foundNullTerminator
+  
+  iny
+  bne @loop
+  
+  inc ptr1+1
+  jmp @loop
+
+@foundNullTerminator:
+  ; Add current Y as offset to ptr1.
+  clc
+  tya
+  adc ptr1
+  sta ptr1
+  bcc @endYOffset
+  inc ptr1+1
+@endYOffset:
+  
+  txa
+  asl
+  tay
+  
+  lda ptr1
+  sta MusicEngineV1MusicEnd,y
+  
+  lda ptr1+1
+  sta MusicEngineV1MusicEnd+1,y
+  
+  rts
+  
 ; Start of all voice/music processing.
 _ProcessMusic:
 ProcessMusic:

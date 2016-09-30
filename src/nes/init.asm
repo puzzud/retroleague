@@ -9,6 +9,8 @@
 .import _InitializeMusic
 .import _ProcessMusic
 
+.importzp _MusicStatus
+
 .importzp sp
 .import __RAM_START__,__RAM_SIZE__
 
@@ -117,7 +119,10 @@ waitSync2:
   
   jsr _UpdateInput
   
+  lda _MusicStatus
+  beq @endProcessMusic
   jsr _ProcessMusic
+@endProcessMusic:
   
   jsr _Update
 

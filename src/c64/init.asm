@@ -10,6 +10,8 @@
 .import _InitializeMusic
 .import _ProcessMusic
 
+.importzp _MusicStatus
+
 .autoimport on
   
 .importzp sp, sreg, regsave, regbank
@@ -112,7 +114,10 @@ DefaultInterrupt:
   tya
   pha
   
+  lda _MusicStatus
+  beq @endProcessMusic
   jsr _ProcessMusic
+@endProcessMusic:
 
   lda #$ff
   sta VIC_IRR
