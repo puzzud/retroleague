@@ -890,11 +890,9 @@ sub OutputMusicSourceBytes($$)
   #output "  .byte " . join("\n  .byte ", @byteList) . "\n";
   #output "  .byte " . join(", ", @byteList) . "\n";
   
-  my $startLabel = "VOICE_$voiceIndex\_START_1";
+  my $startLabel = "_VOICE_$voiceIndex\_START";
   output ".export $startLabel" . "\n";
   output "$startLabel:" . "\n";
-  #output "VOICE_$voiceIndex\_START_2" . "\n";
-  #output "VOICE_$voiceIndex\_START_3" . "\n";
   
   my $nb = scalar(@byteList);
   while($nb > 0)
@@ -917,11 +915,10 @@ sub OutputMusicSourceBytes($$)
     $nb = scalar(@byteList);
   }
   
-  my $endLabel = "VOICE_$voiceIndex\_END_1";
+  my $endLabel = "_VOICE_$voiceIndex\_END";
   output ".export $endLabel" . "\n";
   output "$endLabel:" . "\n";
   
-  #output "VOICE_$voiceIndex\_END_2" . "\n";
   output "  .byte 0" . "\n";
   output "\n";
   output ";=====================================================\n";
