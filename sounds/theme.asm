@@ -1,7 +1,7 @@
 ; Marche aux Flambeaux by F. S. Clark, 1869
 
-.export VOICE_1_START_1
-VOICE_1_START_1:
+.export _VOICE_1_START
+_VOICE_1_START:
   .byte 192, 96, 171, 48, 64, 43, 64, 171, 24, 64, 43, 64, 43, 43, 43, 171
   .byte 8, 43, 43, 173, 48, 171, 24, 41, 168, 18, 176, 6, 168, 24, 164, 42
   .byte 172, 6, 173, 24, 45, 50, 48, 47, 50, 55, 64, 173, 48, 175, 24, 47
@@ -53,15 +53,15 @@ VOICE_1_START_1:
   .byte 48, 55, 185, 24, 55, 183, 18, 181, 6, 181, 24, 176, 42, 177, 6, 169
   .byte 48, 180, 24, 50, 40, 192, 48, 169, 24, 40, 192, 48, 169, 24, 40, 64
   .byte 167, 48, 168, 24, 64, 167, 48, 168, 24, 168, 48, 168, 24
-.export VOICE_1_END_1
-VOICE_1_END_1:
+.export _VOICE_1_END
+_VOICE_1_END:
   .byte 0
 
 ;=====================================================
-.export VOICE_2_START_1
-VOICE_2_START_1:
-.export VOICE_3_START_1
-VOICE_3_START_1:
+.export _VOICE_2_START
+_VOICE_2_START:
+.export _VOICE_3_START
+_VOICE_3_START:
   .byte 192, 255, 192, 225, 147, 48, 159, 24, 31, 24, 31, 28, 24, 29, 33, 26
   .byte 30, 31, 26, 31, 64, 147, 48, 159, 24, 31, 24, 31, 28, 24, 29, 64
   .byte 29, 29, 28, 28, 192, 48, 19, 159, 24, 31, 24, 31, 28, 24, 29, 33
@@ -92,10 +92,10 @@ VOICE_3_START_1:
   .byte 24, 64, 152, 96, 24, 24, 24, 152, 255, 152, 57, 192, 48, 159, 24, 24
   .byte 192, 48, 159, 24, 24, 64, 160, 48, 159, 24, 64, 160, 48, 159, 24, 159
   .byte 48, 159, 24
-.export VOICE_2_END_1
-VOICE_2_END_1:
-.export VOICE_3_END_1
-VOICE_3_END_1:
+.export _VOICE_2_END
+_VOICE_2_END:
+.export _VOICE_3_END
+_VOICE_3_END:
   .byte 0
 
 ;=====================================================

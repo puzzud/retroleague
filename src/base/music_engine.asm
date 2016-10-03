@@ -1,6 +1,7 @@
 ; base music_engine.asm
 
 .export _InitializeMusicEngine
+.export _SetMusicVoice
 .export _StartMusic
 .export _StopMusic
 .export _ProcessMusic
@@ -25,13 +26,6 @@
 .macpack longbranch
 
 .import _SoundKillAll
-
-.import VOICE_1_START_1
-.import VOICE_1_END_1
-.import VOICE_2_START_1
-.import VOICE_2_END_1
-.import VOICE_3_START_1
-.import VOICE_3_END_1
 
 .segment "BSS"
 
@@ -349,6 +343,28 @@ InitializeMusicEngine:
   rts
 
 ;---------------------------------------
+_SetMusicVoice:
+SetMusicVoice:
+  jsr pushax
+  
+  jsr ldax0sp
+  sta ptr1
+  stx ptr1+1
+  
+  ; voiceIndex
+  ldy #2
+  lda (sp),y
+  asl
+  tay
+
+  lda ptr1
+  sta MusicEngineV1MusicStart,y
+  lda ptr1+1
+  sta MusicEngineV1MusicStart+1,y
+  
+  jmp incsp3
+  
+;---------------------------------------
 _StopMusic:
 StopMusic:
   ; Disable all voice music processing.
@@ -364,21 +380,6 @@ StopMusic:
 ;---------------------------------------
 _StartMusic:
 StartMusic:
-  lda #<VOICE_1_START_1
-  sta MusicEngineV1MusicStart
-  lda #>VOICE_1_START_1
-  sta MusicEngineV1MusicStart+1
-  
-  lda #<VOICE_2_START_1
-  sta MusicEngineV2MusicStart
-  lda #>VOICE_2_START_1
-  sta MusicEngineV2MusicStart+1
-  
-  lda #<VOICE_3_START_1
-  sta MusicEngineV3MusicStart
-  lda #>VOICE_3_START_1
-  sta MusicEngineV3MusicStart+1
-
   ; Calculate these rather than setting them.
   ldx #0
   jsr CalculateMusicVoiceEnd

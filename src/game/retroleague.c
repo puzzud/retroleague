@@ -8,6 +8,10 @@ unsigned char count;
 
 extern unsigned char TitleScreenLogoImage[];
 
+extern unsigned char VOICE_1_START[];
+extern unsigned char VOICE_2_START[];
+extern unsigned char VOICE_3_START[];
+
 void Init(void)
 {
   // Set up palette.
@@ -26,6 +30,9 @@ void Init(void)
   
   EnableVideo();
   
+  SetMusicVoice(0, VOICE_1_START);
+  SetMusicVoice(1, VOICE_2_START);
+  SetMusicVoice(2, VOICE_3_START);
   StartMusic();
 }
 

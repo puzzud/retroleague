@@ -36,6 +36,7 @@ extern void __fastcall__ PrintText(const unsigned char* text, unsigned char x, u
 extern void __fastcall__ DrawImage(const unsigned char* image, unsigned char x, unsigned char y);
 
 // Audio
+extern void __fastcall__ SetMusicVoice(unsigned char voiceIndex, const unsigned char* voiceStart);
 extern void __fastcall__ StartMusic(void);
 extern void __fastcall__ StopMusic(void);
 
