@@ -1,5 +1,4 @@
 .import _Init
-.import _Update
 
 .import _LoadFile
 .import _CHARSET
@@ -22,7 +21,22 @@
 
 .export Reset
 
+.exportzp _InitScreen
+.exportzp _CurrentScreenInit
+.exportzp _CurrentScreenUpdate
+
 .include "c64.asm"
+
+.segment "ZEROPAGE"
+
+_InitScreen:
+  .res 1
+  
+_CurrentScreenInit:
+  .res 2
+  
+_CurrentScreenUpdate:
+  .res 2
 
 .segment "BSS"
   
@@ -78,7 +92,25 @@ Reset:
 @mainLoop:
   jsr _UpdateInput
 
-  jsr _Update
+  lda _InitScreen
+  beq @endInit
+  
+  lda #>(@postInit-1)
+  pha
+  lda #<(@postInit-1)
+  pha
+  jmp (_CurrentScreenInit)
+@postInit:
+  lda #0
+  sta _InitScreen
+@endInit:
+  
+  lda #>(@endUpdate-1)
+  pha
+  lda #<(@endUpdate-1)
+  pha
+  jmp (_CurrentScreenUpdate)
+@endUpdate:
   
   ; Wait for the raster to reach line $f8 (248)
   ; This loop is keeping timing stable.

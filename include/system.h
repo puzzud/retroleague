@@ -17,6 +17,15 @@
 #define GET_MEMORY(A)        *BYTE_FROM_ADDRESS(A);
 #define SET_MEMORY(A, V)     *BYTE_FROM_ADDRESS(A) = V;
 
+// General
+extern unsigned char InitScreen;
+extern void (*CurrentScreenInit)(void);
+extern void (*CurrentScreenUpdate)(void);
+
+#pragma zpsym ("InitScreen")
+#pragma zpsym ("CurrentScreenInit")
+#pragma zpsym ("CurrentScreenUpdate")
+
 // Input
 extern unsigned char ControllerButtons[];
 extern unsigned char ControllerButtonsPressed[];

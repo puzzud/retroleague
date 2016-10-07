@@ -1,5 +1,4 @@
 .import _Init
-.import _Update
 
 .import _UpdateInput
 
@@ -16,9 +15,22 @@
 .export Reset
 .exportzp _UpdatePaletteFlag
 
+.exportzp _InitScreen
+.exportzp _CurrentScreenInit
+.exportzp _CurrentScreenUpdate
+
 .include "nes.asm"
 
 .segment "ZEROPAGE"
+
+_InitScreen:
+  .res 1
+  
+_CurrentScreenInit:
+  .res 2
+  
+_CurrentScreenUpdate:
+  .res 2
 
 NmiStatus:
   .res 1
@@ -97,10 +109,10 @@ waitSync2:
   lda #0
   sta PPU_VRAM_ADDR1
   sta PPU_VRAM_ADDR1
-
-  jsr _Init
   
   jsr _InitializeAudio
+
+  jsr _Init
   
   ; Enable NMI.
   lda #%10000000
@@ -120,7 +132,31 @@ waitSync2:
   jsr _ProcessMusic
 @endProcessMusic:
   
-  jsr _Update
+  lda _InitScreen
+  beq @endInit
+  
+  lda #%00000000
+  sta PPU_CTRL1
+  
+  lda #>(@postInit-1)
+  pha
+  lda #<(@postInit-1)
+  pha
+  jmp (_CurrentScreenInit)
+@postInit:
+  lda #0
+  sta _InitScreen
+  
+  lda #%10000000
+  sta PPU_CTRL1
+@endInit:
+  
+  lda #>(@endUpdate-1)
+  pha
+  lda #<(@endUpdate-1)
+  pha
+  jmp (_CurrentScreenUpdate)
+@endUpdate:
 
   jmp @mainLoop
   
