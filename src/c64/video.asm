@@ -3,6 +3,7 @@
 .export _PrintColor
 
 .export _InitializeVideo
+.export _ClearScreen
 .export _PrintText
 .export _DrawImage
 
@@ -38,8 +39,7 @@ _InitializeVideo:
   lda #COLOR_BLACK
   sta _PrintColor
   
-  lda #' '
-  jsr FillScreen
+  jsr _ClearScreen
 
   jsr InitializeCharacterGraphics
   jsr InitializeSprites
@@ -421,6 +421,13 @@ FillScreen:
   stx ptr1+1
   bne @fillScreenColorLoop
 @endFillScreenColor:
+  
+  rts
+  
+;------------------------------------------------------------------
+_ClearScreen:
+  lda #' '
+  jsr FillScreen
   
   rts
   

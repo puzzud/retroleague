@@ -41,6 +41,7 @@ extern void __fastcall__ SetCharacterColor(unsigned char index, unsigned char co
 extern void __fastcall__ SetCharacterPrimaryColor(unsigned char setIndex, unsigned char color);
 extern void __fastcall__ SetCharacterSecondaryColor(unsigned char index, unsigned char color);
 extern void __fastcall__ SetPrintColor(unsigned char setIndex);
+extern void __fastcall__ ClearScreen(void);
 extern void __fastcall__ PrintText(const unsigned char* text, unsigned char x, unsigned char y);
 extern void __fastcall__ DrawImage(const unsigned char* image, unsigned char x, unsigned char y);
 

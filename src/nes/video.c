@@ -33,6 +33,11 @@ void __fastcall__ DisableVideo(void)
 
 void __fastcall__ EnableVideo(void)
 {
+  *PPU_VRAM_ADDR1 = 0x00;
+  *PPU_VRAM_ADDR1 = 0x00;
+  *PPU_VRAM_ADDR2 = 0x00;
+  *PPU_VRAM_ADDR2 = 0x00;
+  
   // Turn on screen.
   *PPU_CTRL1 = 0x90;
   *PPU_CTRL2 = 0x1e;

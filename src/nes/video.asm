@@ -1,6 +1,7 @@
 ; nes video.asm
 
 .export _PrintColorSet
+.export _ClearScreen
 .export _PrintText
 .export _DrawImage
 
@@ -358,6 +359,36 @@ _DrawImage:
 
 @endDrawImage:
   jmp incsp3
+
+;------------------------------------------------------------------
+_ClearScreen:
+  lda #' '
+  jsr FillScreen
+  
+  rts
+  
+;------------------------------------------------------------------
+FillScreen:
+  ldy #>(PPU_NAME_TABLE_0+SCREEN_CHAR_WIDTH)
+  sty PPU_VRAM_ADDR2
+  sty ptr1+1
+  ldy #<(PPU_NAME_TABLE_0+SCREEN_CHAR_WIDTH)
+  sty PPU_VRAM_ADDR2
+  sty ptr1
+  
+  ldy #0
+@vramLoopY:
+  ldx #0
+@vramLoopX:
+  sta PPU_VRAM_IO
+  inx
+  cpx #SCREEN_CHAR_WIDTH
+  bne @vramLoopX
+  iny
+  cpy #(SCREEN_CHAR_HEIGHT-1)
+  bne @vramLoopY
+  
+  rts
   
 ;------------------------------------------------------------------
 ; NOTE: This macro seems to compensate for non-visible top 1 line of name table.
