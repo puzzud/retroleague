@@ -374,6 +374,8 @@ StopMusic:
   sta MusicEngineV3Active
   
   sta MusicStatus
+  
+  jsr _SoundKillAll
 
   rts
   

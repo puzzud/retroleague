@@ -84,18 +84,19 @@ InitializeVoices:
 ;------------------------------------------------------------------
 _SoundKillAll:
 SoundKillAll:
-  lda #0
-  tax
-@loop1:
-  sta SID_S1Lo,x
-  inx
-  cpx #14
-  bne @loop1
-
-  ldx #2
-@loop2:
-  sta SID_FltLo,x
-  dex
-  bpl @loop2
+  lda Voice1ControlCache
+  and #%11111110
+  sta SID_Ctl1
+  sta Voice1ControlCache
+  
+  lda Voice2ControlCache
+  and #%11111110
+  sta SID_Ctl2
+  sta Voice2ControlCache
+  
+  lda Voice3ControlCache
+  and #%11111110
+  sta SID_Ctl3
+  sta Voice3ControlCache
   
   rts
