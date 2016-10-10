@@ -13,6 +13,7 @@
 *.asm text
 *.c text
 *.h text
+*.bas text
 
 *.bmp binary
 *.jpg binary
@@ -29,6 +30,8 @@
 *.lib binary
 *.exe binary
 *.bin binary
+*.app binary
+*.dsk binary
 *.prg binary
 *.d64 binary
 *.nes binary

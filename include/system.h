@@ -1,6 +1,10 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#if defined(__APPLE2ENH__)
+#include "apple2.h"
+#endif
+
 #if defined(__C64__)
 #include "c64.h"
 #endif

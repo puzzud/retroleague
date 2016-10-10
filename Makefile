@@ -1,4 +1,5 @@
 PROJECT_NAME = retroleague
+UC_PROJECT_NAME = $(shell echo $(PROJECT_NAME) | tr a-z A-Z)
 
 CC65_TARGET ?= nes
 
@@ -18,6 +19,17 @@ SRC += $(wildcard $(SDIR)/$(CC65_TARGET)/*.asm)
 
 ASM := $(patsubst %.c,%_c.asm,$(SRC))
 OBJ := $(addprefix $(TDIR)/$(CC65_TARGET)/,$(notdir $(patsubst %.asm,%.o,$(ASM))))
+
+ifeq ($(CC65_TARGET),apple2enh)
+CPU      := 6502
+LDCONFIG := $(CC65_TARGET).cfg
+BIN_EXT  := app
+APPLE_EMU  ?= applewin
+EMU      := $(APPLE_EMU) -d1 
+PROGRAM  := $(PROJECT_NAME).$(BIN_EXT)
+EXECUTABLE  := $(BDIR)/$(PROJECT_NAME).dsk
+TARGET_RULE := $(EXECUTABLE)
+endif
 
 ifeq ($(CC65_TARGET),c64)
 CPU      := 6502
@@ -83,6 +95,17 @@ $(BDIR)/$(PROGRAM): $(OBJ)
 $(BDIR)/$(PROJECT_NAME).d64: $(BDIR)/$(PROGRAM)
 	@c1541 -format $(PROJECT_NAME),"88 2a" d64 $@ -write $< $(PROJECT_NAME)
 
+$(TDIR)/$(CC65_TARGET)/HELLO: $(SDIR)/$(CC65_TARGET)/hello.bas
+	@cat $< | tokenize_asoft > $@
+
+$(BDIR)/$(PROJECT_NAME).dsk: $(BDIR)/$(PROGRAM) | $(TDIR)/$(CC65_TARGET)/HELLO
+	#@mkdos33fs $@
+	@rm -f $@
+	@cp $(LDIR)/master.dsk $@
+	@dos33 -y $@ save a $(TDIR)/$(CC65_TARGET)/HELLO
+	@make_b $(BDIR)/$(PROGRAM) $(TDIR)/$(CC65_TARGET)/$(UC_PROJECT_NAME) 0x4000
+	@dos33 -y $@ save b $(TDIR)/$(CC65_TARGET)/$(UC_PROJECT_NAME)
+
 crc32: $(BDIR)/$(PROGRAM)
 	@./get_crc32.sh $<
 
@@ -92,3 +115,4 @@ play: $(EXECUTABLE)
 clean:
 	@rm -fr $(TDIR)/$(CC65_TARGET)
 	@rm -f $(BDIR)/$(PROGRAM)
+	@rm -f $(EXECUTABLE)
