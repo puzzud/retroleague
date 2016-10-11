@@ -7,6 +7,7 @@
 .import _InitializeVideo
 
 .import _ProcessMusic
+.import _ProcessTone
 
 .importzp _MusicStatus
 
@@ -60,6 +61,9 @@ Reset:
   
 @mainLoop:
   jsr _UpdateInput
+  
+  jsr _ProcessMusic
+  jsr _ProcessTone
   
 @waitFrame:
   lda RDVBLBAR
