@@ -115,6 +115,7 @@ const char* noteNames[12] =
   "B"
 };
 
+//#define TARGET_APPLE2ENH
 //#define TARGET_C64
 #define TARGET_NES
 
@@ -128,23 +129,30 @@ int main()
     double pitchFrequency = pitchFrequencies[i];
 
     int noteWordValue = 0;
-
-    #if defined(TARGET_NES)
-    const double ntscFrequency = 1789773.0;
-
-    int timingWord = int((ntscFrequency / (16.0 * pitchFrequency) ) - 1);
+    
+#if defined(TARGET_APPLE2ENH)
+    const double cpuFrequency = 1023000.0;
+    int timingWord = int((cpuFrequency / (32.0 * pitchFrequency)) - 1);
 
     noteWordValue = timingWord;
-    #endif
+#endif
+    
+#if defined(TARGET_NES)
+    const double ntscFrequency = 1789773.0;
 
-    #if defined(TARGET_C64)
+    int timingWord = int((ntscFrequency / (16.0 * pitchFrequency)) - 1);
+
+    noteWordValue = timingWord;
+#endif
+
+#if defined(TARGET_C64)
     double const ntscPhi = 1022727.0; // This is for machines with 6567R8 VIC. 6567R56A is slightly different.
     double const constant = (256.0 * 256.0 * 256.0) / ntscPhi;
     
     int sidFrequency = int(constant * pitchFrequency);
 
     noteWordValue = sidFrequency;
-    #endif
+#endif
 
     cout << "NOTE_FREQ_" << octaveIndex << "_" << noteLabelNames[noteIndex] << " = " << noteWordValue << " ; " << noteNames[noteIndex] << "-" << octaveIndex << endl;
   }

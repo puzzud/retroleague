@@ -26,82 +26,82 @@ MusicEngineV1SpeakerDelayHi:
 .segment "CODE"
 
 ; NOTE: Platform specific (NES?).
-NOTE_FREQ_1_C  = 3419 ; C-1
-NOTE_FREQ_1_CS = 3227 ; C#-1
-NOTE_FREQ_1_D  = 3046 ; D-1
-NOTE_FREQ_1_DS = 2875 ; D#-1
-NOTE_FREQ_1_E  = 2714 ; E-1
-NOTE_FREQ_1_F  = 2561 ; F-1
-NOTE_FREQ_1_FS = 2417 ; F#-1
-NOTE_FREQ_1_G  = 2281 ; G-1
-NOTE_FREQ_1_GS = 2153 ; G#-1
-NOTE_FREQ_1_A  = 2032 ; A-1
-NOTE_FREQ_1_AS = 1918 ; A#-1
-NOTE_FREQ_1_B  = 1810 ; B-1
-NOTE_FREQ_2_C  = 1709 ; C-2
-NOTE_FREQ_2_CS = 1613 ; C#-2
-NOTE_FREQ_2_D  = 1522 ; D-2
-NOTE_FREQ_2_DS = 1437 ; D#-2
-NOTE_FREQ_2_E  = 1356 ; E-2
-NOTE_FREQ_2_F  = 1280 ; F-2
-NOTE_FREQ_2_FS = 1208 ; F#-2
-NOTE_FREQ_2_G  = 1140 ; G-2
-NOTE_FREQ_2_GS = 1076 ; G#-2
-NOTE_FREQ_2_A  = 1015 ; A-2
-NOTE_FREQ_2_AS = 958  ; A#-2
-NOTE_FREQ_2_B  = 904  ; B-2
-NOTE_FREQ_3_C  = 854  ; C-3
-NOTE_FREQ_3_CS = 806  ; C#-3
-NOTE_FREQ_3_D  = 760  ; D-3
-NOTE_FREQ_3_DS = 718  ; D#-3
-NOTE_FREQ_3_E  = 677  ; E-3
-NOTE_FREQ_3_F  = 639  ; F-3
-NOTE_FREQ_3_FS = 603  ; F#-3
-NOTE_FREQ_3_G  = 569  ; G-3
-NOTE_FREQ_3_GS = 537  ; G#-3
-NOTE_FREQ_3_A  = 507  ; A-3
-NOTE_FREQ_3_AS = 478  ; A#-3
-NOTE_FREQ_3_B  = 451  ; B-3
-NOTE_FREQ_4_C  = 426  ; C-4
-NOTE_FREQ_4_CS = 402  ; C#-4
-NOTE_FREQ_4_D  = 379  ; D-4
-NOTE_FREQ_4_DS = 358  ; D#-4
-NOTE_FREQ_4_E  = 338  ; E-4
-NOTE_FREQ_4_F  = 319  ; F-4
-NOTE_FREQ_4_FS = 301  ; F#-4
-NOTE_FREQ_4_G  = 284  ; G-4
-NOTE_FREQ_4_GS = 268  ; G#-4
-NOTE_FREQ_4_A  = 253  ; A-4
-NOTE_FREQ_4_AS = 238  ; A#-4
-NOTE_FREQ_4_B  = 225  ; B-4
-NOTE_FREQ_5_C  = 212  ; C-5
-NOTE_FREQ_5_CS = 200  ; C#-5
-NOTE_FREQ_5_D  = 189  ; D-5
-NOTE_FREQ_5_DS = 178  ; D#-5
-NOTE_FREQ_5_E  = 168  ; E-5
-NOTE_FREQ_5_F  = 159  ; F-5
-NOTE_FREQ_5_FS = 150  ; F#-5
-NOTE_FREQ_5_G  = 141  ; G-5
-NOTE_FREQ_5_GS = 133  ; G#-5
-NOTE_FREQ_5_A  = 126  ; A-5
-NOTE_FREQ_5_AS = 118  ; A#-5
-NOTE_FREQ_5_B  = 112  ; B-5
-NOTE_FREQ_6_C  = 105  ; C-6
-NOTE_FREQ_6_CS = 99   ; C#-6
-NOTE_FREQ_6_D  = 94   ; D-6
-NOTE_FREQ_6_DS = 88   ; D#-6
-NOTE_FREQ_6_E  = 83   ; E-6
-NOTE_FREQ_6_F  = 79   ; F-6
-NOTE_FREQ_6_FS = 74   ; F#-6
-NOTE_FREQ_6_G  = 70   ; G-6
-NOTE_FREQ_6_GS = 66   ; G#-6
-NOTE_FREQ_6_A  = 62   ; A-6
-NOTE_FREQ_6_AS = 58   ; A#-6
-NOTE_FREQ_6_B  = 55   ; B-6
+NOTE_FREQ_1_C  = 976 ; C-1
+NOTE_FREQ_1_CS = 921 ; C#-1
+NOTE_FREQ_1_D  = 869 ; D-1
+NOTE_FREQ_1_DS = 821 ; D#-1
+NOTE_FREQ_1_E  = 774 ; E-1
+NOTE_FREQ_1_F  = 731 ; F-1
+NOTE_FREQ_1_FS = 690 ; F#-1
+NOTE_FREQ_1_G  = 651 ; G-1
+NOTE_FREQ_1_GS = 614 ; G#-1
+NOTE_FREQ_1_A  = 580 ; A-1
+NOTE_FREQ_1_AS = 547 ; A#-1
+NOTE_FREQ_1_B  = 516 ; B-1
+NOTE_FREQ_2_C  = 487 ; C-2
+NOTE_FREQ_2_CS = 460 ; C#-2
+NOTE_FREQ_2_D  = 434 ; D-2
+NOTE_FREQ_2_DS = 410 ; D#-2
+NOTE_FREQ_2_E  = 386 ; E-2
+NOTE_FREQ_2_F  = 365 ; F-2
+NOTE_FREQ_2_FS = 344 ; F#-2
+NOTE_FREQ_2_G  = 325 ; G-2
+NOTE_FREQ_2_GS = 306 ; G#-2
+NOTE_FREQ_2_A  = 289 ; A-2
+NOTE_FREQ_2_AS = 273 ; A#-2
+NOTE_FREQ_2_B  = 257 ; B-2
+NOTE_FREQ_3_C  = 243 ; C-3
+NOTE_FREQ_3_CS = 229 ; C#-3
+NOTE_FREQ_3_D  = 216 ; D-3
+NOTE_FREQ_3_DS = 204 ; D#-3
+NOTE_FREQ_3_E  = 192 ; E-3
+NOTE_FREQ_3_F  = 182 ; F-3
+NOTE_FREQ_3_FS = 171 ; F#-3
+NOTE_FREQ_3_G  = 162 ; G-3
+NOTE_FREQ_3_GS = 152 ; G#-3
+NOTE_FREQ_3_A  = 144 ; A-3
+NOTE_FREQ_3_AS = 136 ; A#-3
+NOTE_FREQ_3_B  = 128 ; B-3
+NOTE_FREQ_4_C  = 121 ; C-4
+NOTE_FREQ_4_CS = 114 ; C#-4
+NOTE_FREQ_4_D  = 107 ; D-4
+NOTE_FREQ_4_DS = 101 ; D#-4
+NOTE_FREQ_4_E  = 95 ; E-4
+NOTE_FREQ_4_F  = 90 ; F-4
+NOTE_FREQ_4_FS = 85 ; F#-4
+NOTE_FREQ_4_G  = 80 ; G-4
+NOTE_FREQ_4_GS = 75 ; G#-4
+NOTE_FREQ_4_A  = 71 ; A-4
+NOTE_FREQ_4_AS = 67 ; A#-4
+NOTE_FREQ_4_B  = 63 ; B-4
+NOTE_FREQ_5_C  = 60 ; C-5
+NOTE_FREQ_5_CS = 56 ; C#-5
+NOTE_FREQ_5_D  = 53 ; D-5
+NOTE_FREQ_5_DS = 50 ; D#-5
+NOTE_FREQ_5_E  = 47 ; E-5
+NOTE_FREQ_5_F  = 44 ; F-5
+NOTE_FREQ_5_FS = 42 ; F#-5
+NOTE_FREQ_5_G  = 39 ; G-5
+NOTE_FREQ_5_GS = 37 ; G#-5
+NOTE_FREQ_5_A  = 35 ; A-5
+NOTE_FREQ_5_AS = 33 ; A#-5
+NOTE_FREQ_5_B  = 31 ; B-5
+NOTE_FREQ_6_C  = 29 ; C-6
+NOTE_FREQ_6_CS = 27 ; C#-6
+NOTE_FREQ_6_D  = 26 ; D-6
+NOTE_FREQ_6_DS = 24 ; D#-6
+NOTE_FREQ_6_E  = 23 ; E-6
+NOTE_FREQ_6_F  = 21 ; F-6
+NOTE_FREQ_6_FS = 20 ; F#-6
+NOTE_FREQ_6_G  = 19 ; G-6
+NOTE_FREQ_6_GS = 18 ; G#-6
+NOTE_FREQ_6_A  = 17 ; A-6
+NOTE_FREQ_6_AS = 16 ; A#-6
+NOTE_FREQ_6_B  = 15 ; B-6
 
 ;---------------------------------------
-MusicEngineV1FreqTableHi = MusicEngineNoteFreqTableHi2C
-MusicEngineV1FreqTableLo = MusicEngineNoteFreqTableLo2C
+MusicEngineV1FreqTableHi = MusicEngineNoteFreqTableHi1C
+MusicEngineV1FreqTableLo = MusicEngineNoteFreqTableLo1C
 
 MusicEngineV2FreqTableHi = MusicEngineNoteFreqTableHi1C
 MusicEngineV2FreqTableLo = MusicEngineNoteFreqTableLo1C
@@ -155,37 +155,54 @@ MusicEngineV3FreqTableLo = MusicEngineNoteFreqTableLo1C
 
 .include "../base/music_engine.asm"
 
+.segment "ZEROPAGE"
+
+.segment "CODE"
+
 ;------------------------------------------------------------------
 _ProcessTone:
   lda MusicEngineV1SpeakerDelayLo
   ora MusicEngineV1SpeakerDelayHi
   beq @endPlayTone
   
-  ; Set duration
-  ldx #4
+  ; Set pitch.
+  ldx MusicEngineV1SpeakerDelayHi
+  stx tmp2
+  ldx MusicEngineV1SpeakerDelayLo
+  
+  ; Set duration.
+  ldy #3
+  sty tmp1
   
 @playToneLoop:
-  ; Load wavelength / pitch.
-  ldy MusicEngineV1SpeakerDelayHi
-  sty tmp1
-  ldy MusicEngineV1SpeakerDelayLo
-  
   lda SPEAKER
   
 @playToneDelay:
   dey
-  beq @endDecrementDelay
-  cpy #$ff
-  bne @endDecrementDelay
+  bne @decrementDelay
+  
   dec tmp1
+  beq @endPlayTone
+
+@decrementDelay:
+  dex
+  beq @endDecrementDelay
+  cpx #$ff
+  bne @endDecrementDelay
+  lda tmp2
+  beq @endDecrementDelay
+  dec tmp2
 @endDecrementDelay:
 
-  tya
-  ora tmp1
+  txa
+  ora tmp2
   bne @playToneDelay
-
-  dex
-  bne @playToneLoop
+  
+@blah:
+  lda MusicEngineV1SpeakerDelayHi
+  sta tmp2
+  ldx MusicEngineV1SpeakerDelayLo
+  jmp @playToneLoop
   
 @endPlayTone:
   rts

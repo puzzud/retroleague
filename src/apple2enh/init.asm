@@ -62,9 +62,6 @@ Reset:
 @mainLoop:
   jsr _UpdateInput
   
-  jsr _ProcessMusic
-  jsr _ProcessTone
-  
 @waitFrame:
   lda RDVBLBAR
   bmi @waitFrame
@@ -88,5 +85,8 @@ Reset:
   pha
   jmp (_CurrentScreenUpdate)
 @endUpdate:
+  
+  jsr _ProcessMusic
+  jsr _ProcessTone
   
   jmp @mainLoop
