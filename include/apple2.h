@@ -84,9 +84,15 @@
 
 #define TAPEIN                  BYTE_FROM_ADDRESS(0xc060)
 
+#define PB3                     BYTE_FROM_ADDRESS(0xc060)
+
 #define OPNAPPLE                BYTE_FROM_ADDRESS(0xc061)
+
+#define PB0                     BYTE_FROM_ADDRESS(0xc061)
+
 #define CLSAPPLE                BYTE_FROM_ADDRESS(0xc062)
 
+#define PB1                     BYTE_FROM_ADDRESS(0xc062)
 #define PB2                     BYTE_FROM_ADDRESS(0xc063)
 
 #define PADDLE0                 BYTE_FROM_ADDRESS(0xc064)

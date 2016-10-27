@@ -29,7 +29,7 @@ ONE:
 _UpdateInput:
 UpdateInput:
   lda _ControllerButtons
-  sta _ControllerButtonsPressed
+  sta _ControllerButtonsPrevious
 
   ldx #0
   stx ONE
@@ -108,6 +108,28 @@ UpdateInput:
   ora #%00000001
   sta _ControllerButtons
 @doneCheckingYAxis:
+
+@checkButtons:
+  lda _ControllerButtons
+
+@checkButton0:
+  ldx PB0
+  bpl @checkButton1
+  ora #%00010000
+@checkButton1:
+  ldx PB1
+  bpl @checkButton2
+  ora #%00100000
+@checkButton2:
+  ldx PB2
+  bpl @checkButton3
+  ora #%01000000
+@checkButton3:
+  ldx PB3
+  bpl @endCheckButtons
+  ora #%10000000
+@endCheckButtons:
+  sta _ControllerButtons
 
   lda _ControllerButtonsPrevious
   eor #$ff

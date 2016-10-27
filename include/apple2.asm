@@ -81,9 +81,15 @@ CLRDHIRES= $c05F
 
 TAPEIN =   $c060
 
+PB3 =      $c060
+
 OPNAPPLE = $c061
+
+PB0 =      $c061
+
 CLSAPPLE = $c062
 
+PB1 =      $c062
 PB2 =      $c063
 
 PADDLE0 =  $c064
