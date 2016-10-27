@@ -86,7 +86,10 @@ Reset:
   jmp (_CurrentScreenUpdate)
 @endUpdate:
   
+  lda _MusicStatus
+  beq @endProcessMusic
   jsr _ProcessMusic
   jsr _ProcessTone
+@endProcessMusic:
   
   jmp @mainLoop
