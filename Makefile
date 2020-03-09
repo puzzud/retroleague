@@ -66,7 +66,7 @@ AS       := ca65
 CC       := cc65
 LD       := ld65
 AFLAGS   := --cpu $(CPU) -I $(IDIR)
-CFLAGS   := --cpu $(CPU) -I $(IDIR) -O3 -D$(CTARGET)
+CFLAGS   := --cpu $(CPU) -I $(IDIR) -O -D$(CTARGET)
 LDFLAGS  := -C $(CDIR)/$(LDCONFIG) -L $(LDIR)
 LDFLAGS2 := --lib $(CC65_TARGET).lib
 
