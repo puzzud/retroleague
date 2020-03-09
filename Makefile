@@ -68,7 +68,7 @@ LD       := ld65
 AFLAGS   := --cpu $(CPU) -I $(IDIR)
 CFLAGS   := --cpu $(CPU) -I $(IDIR) -O -D$(CTARGET)
 LDFLAGS  := -C $(CDIR)/$(LDCONFIG) -L $(LDIR)
-LDFLAGS2 := --lib $(CC65_TARGET).lib
+LDFLAGS2 := --lib $(CC65_TARGET).lib --dbgfile $(BDIR)/$(PROJECT_NAME).dbg --mapfile $(BDIR)/$(PROJECT_NAME).map
 
 ########################################
 
@@ -90,7 +90,7 @@ $(TDIR)/$(CC65_TARGET)/%.o: $(SDIR)/$(CC65_TARGET)/%.asm | $(TDIR)/$(CC65_TARGET
 	$(AS) $(AFLAGS) $< -o $@
 
 $(BDIR)/$(PROGRAM): $(OBJ)
-	$(LD) -Ln $(BDIR)/vice.lbl $(LDFLAGS) -o $@ $^ $(LDFLAGS2)
+	$(LD) -Ln $(BDIR)/$(PROJECT_NAME).lbl $(LDFLAGS) -o $@ $^ $(LDFLAGS2)
 
 $(BDIR)/$(PROJECT_NAME).d64: $(BDIR)/$(PROGRAM)
 	@c1541 -format $(PROJECT_NAME),"88 2a" d64 $@ -write $< $(PROJECT_NAME)
